@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig host="192.168.1.205" id="647450a3-ac2b-42ec-9979-d658d7d28bdd" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="qinghe" useOpenSSHConfig="true" />
+      <sshConfig host="127.0.0.1" id="1631d900-1163-4f6c-91fe-185c77959e5a" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="mtdk" useOpenSSHConfig="true" />
+      <sshConfig host="192.168.1.86" id="0a5828a1-40c2-40cc-b339-892efb61f552" keyPath="C:\Users\mtdk\.ssh\id_rsa" port="22" nameFormat="DESCRIPTIVE" username="mtdk" useOpenSSHConfig="true" />
+      <sshConfig host="192.168.1.83" id="6c203a57-f941-4f5b-a364-23cc7c38d9ab" keyPath="C:\Users\mtdk\.ssh\id_rsa" port="22" nameFormat="DESCRIPTIVE" username="mtdk" useOpenSSHConfig="true" />
+      <sshConfig host="192.168.1.88" id="b001659d-6bb4-4b09-a3b7-31bc94ef1877" keyPath="$USER_HOME$/.ssh/id_rsa" port="22" nameFormat="DESCRIPTIVE" username="mtdk" useOpenSSHConfig="true" />
+    </configs>
+  </component>
+</project>
