@@ -23,11 +23,6 @@
 /app/Config/core.php
 /app/Config/database.php
 /vendors/*
-<<<<<<< HEAD
 
 # Phpstorm
 **/ .idea/
-=======
-# Phpstorm
-**/.idea
->>>>>>> 80e7b3915d0a2c964477f01527ef3a53f52febfd
