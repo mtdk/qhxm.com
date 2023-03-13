@@ -2,29 +2,8 @@
 <project version="4">
   <component name="WebServers">
     <option name="servers">
-      <webServer id="6bcdb152-73ba-4e7f-8afd-f2eb3690cd22" name="Pi-Server" url="http://192.168.1.83/">
-        <fileTransfer rootFolder="/home/mtdk/apps/qhxm.com" accessType="SFTP" host="192.168.1.83" port="22" sshConfigId="6c203a57-f941-4f5b-a364-23cc7c38d9ab" sshConfig="mtdk@192.168.1.83:22 key" keyPair="true">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-        </fileTransfer>
-      </webServer>
-      <webServer id="b521d8df-089b-402b-af5e-2f0ecfa57d92" name="qinghe" url="http://qhxm.com">
-        <fileTransfer rootFolder="/var/www/qhxm.com" accessType="SFTP" host="192.168.1.205" port="22" sshConfigId="647450a3-ac2b-42ec-9979-d658d7d28bdd" sshConfig="qinghe@192.168.1.205:22 key" keyPair="true">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-        </fileTransfer>
-      </webServer>
-      <webServer id="6f771878-316f-47ec-8ace-99759c425461" name="myUbuntu2204">
-        <fileTransfer rootFolder="/var/www/qhxm.com" accessType="SFTP" host="192.168.1.86" port="22" sshConfigId="0a5828a1-40c2-40cc-b339-892efb61f552" sshConfig="mtdk@192.168.1.86:22 key" keyPair="true">
-          <advancedOptions>
-            <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
-          </advancedOptions>
-        </fileTransfer>
-      </webServer>
-      <webServer id="00daeabd-633d-4b3b-bf77-1ee9e74f9103" name="mtdk-server" url="http://192.168.1.88/">
-        <fileTransfer rootFolder="/var/www/qhxm.com" accessType="SFTP" host="192.168.1.88" port="22" sshConfigId="b001659d-6bb4-4b09-a3b7-31bc94ef1877" sshConfig="mtdk@192.168.1.88:22 key" keyPair="true">
+      <webServer id="fb167c22-8b27-4e69-b8cd-2d6259fe8b4a" name="192.168.1.205">
+        <fileTransfer rootFolder="/var/www/qhxm.com" accessType="SFTP" host="192.168.1.205" port="22" sshConfigId="9f07e686-d475-4927-bbc5-afc7922ffdd9" sshConfig="qinghe@192.168.1.205:22 key" keyPair="true">
           <advancedOptions>
             <advancedOptions dataProtectionLevel="Private" keepAliveTimeout="0" passiveMode="true" shareSSLContext="true" />
           </advancedOptions>
