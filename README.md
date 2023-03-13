@@ -1,2 +1,0 @@
-# qhxm.com
-php
