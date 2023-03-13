@@ -1,13 +1,8 @@
 <?php
 include __DIR__ . '/../user_session/user_session.php';
 include __DIR__ . '/../user_session/userinfo_check.php';
-include __DIR__ . '/../db/db.php';
 include __DIR__ . '/../myHeader.php';
 include __DIR__ . '/../myMenu.php';
-$stmt = $dbh->prepare("select uid,uname from usertb");
-$stmt->execute();
-$rows = $stmt->fetchAll();
-
 ?>
     <main class="flex-shrink-0">
         <div class="container mt-lg-auto">
@@ -25,19 +20,6 @@ $rows = $stmt->fetchAll();
                     <input type="date" class="form-control" id="stop_time">
                 </div>
                 <div class="col-auto">
-                    <label class="form-control-plaintext">操作人员</label>
-                </div>
-                <div class="col-auto">
-                    <select class="form-select" id="userid">
-                        <option selected disabled value="">请选择您的姓名...</option>
-                        <?php
-                        foreach ($rows as $key => $value) {
-                            echo "<option value=" . $value['uid'] . ">" . $value['uname'] . "</option>";
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-auto">
                     <button type="submit" class="btn btn-primary mb-3" onclick="LoadData()">查询</button>
                 </div>
             </div>
@@ -49,12 +31,11 @@ $rows = $stmt->fetchAll();
                     <th scope="col">设备编号</th>
                     <th scope="col">启动日期</th>
                     <th scope="col">启动时间</th>
-                    <th scope="col">关闭时间</th>
-                    <th scope="col">总时长(分钟)</th>
                     <th scope="col">产品编号</th>
                     <th scope="col">产品批号</th>
                     <th scope="col">当前状态</th>
                     <th scope="col">操作员</th>
+                    <th scope="col">#</th>
                 </tr>
                 </thead>
                 <tbody id="tbody">
@@ -69,52 +50,31 @@ $rows = $stmt->fetchAll();
                         alert('请选择查询开始时间');
                     } else if (stop_time == '') {
                         alert('请选择查询结束时间');
-                    } else if (userid == '') {
-                        alert('请选择操作人员姓名');
                     } else {
                         $.ajax({
                             type: 'POST',
-                            url: './fssb_rds_send.php',
+                            url: './fssb_rdsup_send.php',
                             data: {
                                 start_time: start_time,
-                                stop_time: stop_time,
-                                userid: userid
+                                stop_time: stop_time
                             },
                             success: function (data) {
-                                //console.log(data);
-                                const a = data.split(' ');
-                                //console.log(a);
-                                let trStr = '';//动态拼接table
-                                for (let i = 0; i < a.length - 1; i++) {
+                                let dt = JSON.parse(data);
+                                let i;
+                                let trStr = '';
+                                for (i = 0; i < dt.length; i++) {
                                     trStr += '<tr>';
-                                    trStr += '<td>' + (i + 1) + '</td>';
-                                    trStr += '<td>' + JSON.parse(a[i]).machine_id + '</td>';
-                                    trStr += '<td>' + JSON.parse(a[i]).register_date + '</td>';
-                                    if ((JSON.parse(a[i]).register_time) == null) {
-                                        trStr += '<td></td>';
-                                    } else {
-                                        trStr += '<td>' + JSON.parse(a[i]).register_time.slice(0, 5) + '</td>';
-                                    }
-                                    if ((JSON.parse(a[i]).shutdown_time) == null) {
-                                        trStr += '<td></td>';
-                                    } else {
-                                        trStr += '<td>' + JSON.parse(a[i]).shutdown_time.slice(0, 5) + '</td>';
-                                    }
-                                    if ((JSON.parse(a[i]).total_duration) == null) {
-                                        trStr += '<td></td>';
-                                    } else {
-                                        trStr += '<td>' + JSON.parse(a[i]).total_duration + '</td>';
-                                    }
-                                    trStr += '<td>' + JSON.parse(a[i]).pro_id + '</td>';
-                                    trStr += '<td>' + JSON.parse(a[i]).bath_number + '</td>';
-                                    trStr += '<td>' + JSON.parse(a[i]).machine_status + '</td>';
-                                    trStr += '<td>' + JSON.parse(a[i]).uname + '</td>';
+                                    trStr += '<td>' + dt[i].id + '</td>';
+                                    trStr += '<td>' + dt[i].machine_id + '</td>';
+                                    trStr += '<td>' + dt[i].register_date + '</td>';
+                                    trStr += '<td>' + dt[i].register_time.slice(0, 5) + '</td>';
+                                    trStr += '<td>' + dt[i].pro_id + '</td>';
+                                    trStr += '<td>' + dt[i].bath_number + '</td>';
+                                    trStr += '<td>' + dt[i].machine_status + '</td>';
+                                    trStr += '<td>' + dt[i].uname + '</td>';
+                                    trStr += '<td><a href="#?id=' + dt[i].id + '" class="btn-link link-danger">修改</a>' + '</td>';
                                     trStr += '</tr>';
                                 }
-                                trStr += '<tr>';
-                                trStr += '<td colspan=10><a href="./fssb_rds_print.php?start_time=' + start_time + '&stop_time=' + stop_time + '&userid=' + userid + '" class="btn btn-outline-success" target="_blank">打印</a>';
-                                trStr += '</td>';
-                                trStr += '</tr>';
                                 $("#tbody").html(trStr);
                             }
                         });
