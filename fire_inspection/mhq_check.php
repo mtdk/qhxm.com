@@ -11,20 +11,10 @@ include __DIR__ . '/../myMenu.php';
         <div class="container mt-lg-4">
             <div class="row">
                 <div class="text-center mb-2">
-                    <h2>分散设备运行记录</h2>
+                    <h2>灭火器检查表</h2>
                 </div>
             </div>
-            <form class="row g-3 needs-validation" novalidate="" action="fssbjl_save.php" method="post">
-                <div class="col-sm-2">
-                    <label for="validationmachine" class="form-label">分散设备选择</label>
-                    <select name="machine_id" class="form-select" id="validationmachine" required>
-                        <option selected disabled value="">请选择...</option>
-
-                    </select>
-                    <div class="invalid-feedback">
-                        请选择生产设备...
-                    </div>
-                </div>
+            <form class="row g-3 needs-validation" novalidate="" enctype="multipart/form-data" action="mhq_check_save.php" method="post">
                 <div class="col-sm-2">
                     <label for="validationTime" class="form-label">时间选择</label>
                     <input type="time" class="form-control" id="validationTime" name="register_time"
@@ -58,7 +48,11 @@ include __DIR__ . '/../myMenu.php';
                     </div>
                 </div>
                 <div class="mb-3">
-                    <input type="file" accept="image/*" capture="environment" multiple class="form-control" aria-label="file example" required>
+                    <input type="file" name="image_upload_a" accept="image/*" capture="environment" class="form-control" aria-label="file example" required>
+                    <div class="invalid-feedback">Example invalid form file feedback</div>
+                </div>
+                <div class="mb-3">
+                    <input type="file" name="image_upload_b" accept="image/*" capture="environment" class="form-control" aria-label="file example" required>
                     <div class="invalid-feedback">Example invalid form file feedback</div>
                 </div>
                 <div class="col-12">
