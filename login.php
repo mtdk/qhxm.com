@@ -14,7 +14,7 @@ $rows = $stmt->fetchAll();
     <script>
         function UsCheck(str) {
             var xmlhttp;
-            if (str.length == 0) {
+            if (str.length === 0) {
                 document.getElementById("upassword").innerHTML = "";
                 return;
             }
@@ -26,8 +26,8 @@ $rows = $stmt->fetchAll();
                 xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
             }
             xmlhttp.onreadystatechange = function () {
-                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                    if (xmlhttp.responseText != '') {
+                if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                    if (xmlhttp.responseText !== '') {
                         document.getElementById("upassword").value = xmlhttp.responseText;
                         document.getElementById("remember_me").checked = true;
                     } else {
