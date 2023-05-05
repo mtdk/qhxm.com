@@ -58,14 +58,60 @@ include __DIR__ . '/../myMenu.php';
                            aria-label="file example" required>
                     <div class="invalid-feedback">Example invalid form file feedback</div>
                 </div>
-                <div class="mb-3" id="app">
+                <div class="mb-3">
                     <div id="signatureparent">
-                        <div id="signature" style="border: 1px solid cornflowerblue"></div>
+                        <div id="canvasDiv" style="border: 1px solid cornflowerblue"></div>
                         <br>
-                        <button type="button" class="btn btn-primary btn-block" id="save">提&nbsp;交&nbsp;保&nbsp;存</button>
-                        <button type="button" class="btn btn-primary btn-block" id="clear">清&nbsp;除</button>
+                        <button type="button" class="btn btn-primary btn-block" id="btn_submit">确定</button>
+                        <button type="button" class="btn btn-primary btn-block" id="btn_clear">重写</button>
+                        <br>
                     </div>
+                    <img id="qmimg" type="image" style="border: 1px solid cornflowerblue">
                 </div>
+                <div class="mb-3" id="btn_save">
+                    <button type="submit" class="btn btn-primary btn-block" id="save">提&nbsp;交&nbsp;保&nbsp;存
+                    </button>
+                </div>
+                <script src="../js/3.6.6/jquery.js"></script>
+                <script src="../js/jSignature.min.js"></script>
+                <script type="text/javascript">
+                    $(function () {
+                        let param = {
+                            width: '100%',
+                            height: '300px',
+                            cssclass: 'cans',
+                            UndoButton: true,
+                            signatureLine: false,
+                            lineWidth: '2'
+                        };
+                        $('#qmimg').hide();
+                        $('#btn_save').hide();
+                        $('#canvasDiv').jSignature(param);
+
+                        $('#btn_clear').click(function () {
+                            $('#canvasDiv').jSignature('reset');
+                        });
+
+                        $('#btn_submit').click(function () {
+                            if ($('#canvasDiv').jSignature('getData', 'native').length === 0) {
+                                alert('请签名后再提交！');
+                                return;
+                            }
+
+                            $('#qmimg').show();
+                            let datapair = $('#canvasDiv').jSignature('getData', 'image');
+                            let i = new Image();
+                            i.src = "data:" + datapair[0] + "," + datapair[1];
+                            i.image = datapair[1];
+                            $('#qmimg').attr('src', `data:image/png;base64,${i.image}`);
+                            $('#signatureparent').hide();
+                            // $('#canvasDiv').hide();
+                            // $('#btn_submit').hide();
+                            // $('#btn_clear').hide();
+                            $('#btn_save').show();
+                        });
+                    });
+                </script>
                 <script>
                     (() => {
                         'use strict'
@@ -86,59 +132,6 @@ include __DIR__ . '/../myMenu.php';
                     })()
                 </script>
             </form>
-            <script src="../js/3.6.6/jquery.js"></script>
-            <script src="../js/jSignature.min.js"></script>
-            <script type="text/javascript">
-                let param = {
-                    width: '100%',
-                    height: '300px',
-                    cssclass: 'zx11',
-                    UndoButton: true,
-                    signatureLine: false,
-                    lineWidth: '3'
-                };
-                $('#signature').jSignature(param);
-
-                $('#clear').click(function () {
-                    $('#signature').jSignature('reset');
-                });
-
-                $('#save').click(function () {
-                    if ($('#signature').jSignature('getData', 'native').length === 0) {
-                        alert('请签名后再提交！');
-                        return;
-                    }
-                    let con = confirm('提交后不可更改，确认提交签名？');
-                    if (con === false) return;
-
-                    let datapair = $('#signature').jSignature('getData', 'image');
-                    let i = new Image();
-                    i.src = 'data:' + datapair[0] + ',' + datapair[1];
-                    console.log(datapair[0]);
-                    i.image = datapair[1];
-                    console.log(i.image);
-                });
-
-                // dataURLtoFile:function (dataurl){
-                //     let arr = dataurl.split(','),
-                //         mime=arr[0].match(/:(.*?);/)[1],
-                //         bstr=atob(arr[1]),
-                //         n=bstr.length,
-                //         u8arr=new Uint8Array(n),
-                //         while(n--){
-                //         u8arr[n]=bstr.charCodeAt(n);
-                //     }
-                //     return new Blob([u8arr],{type:mime});
-                // },
-                // blobToFile:function(theBlob,fileName){
-                //   theBlob.lastModifiedDate=new Date();
-                //   theBlob.name=fileName;
-                //   return theBlob;
-                // },
-                //
-                // let blob=dataURLtoBlob(base64Data);
-                // let file=blobToFile(blob,imgName);
-            </script>
         </div>
     </main>
 
