@@ -33,7 +33,7 @@ $rows = $stmt->fetchAll();
                 </div>
                 <div class="col-sm-2">
                     <label for="validationTime" class="form-label">时间选择</label>
-                    <input type="time" class="form-control" id="validationTime" name="register_time"
+                    <input type="time" class="form-control" id="validationTime" name="start_time"
                            value="<?php echo date('H:i'); ?>" required>
                     <div class="invalid-feedback">
                         请选择时间...
@@ -42,7 +42,7 @@ $rows = $stmt->fetchAll();
                 <div class="col-sm-2">
                     <label for="validationDatetime" class="form-label">日期选择</label>
                     <input type="text" class="form-control" id="validationDatetime" value="<?php echo date('Y-m-d'); ?>"
-                           name="register_date" readonly required>
+                           name="start_date" readonly required>
                     <div class="invalid-feedback">
                         请选择日期...
                     </div>
@@ -63,18 +63,8 @@ $rows = $stmt->fetchAll();
                         请输入批号...！
                     </div>
                 </div>
-                <div class="col-sm-1">
-                    <label for="validationStartAndStop" class="form-label">开机启动</label>
-                    <div class="form-check mt-1">
-                        <input type="radio" class="form-check-input" id="validationStart" value="开机"
-                               name="radio_stacked"
-                               required>
-                        <label class="form-check-label" for="validationStart">运行...</label>
-                        <div class="invalid-feedback">请选择开机运行...!</div>
-                    </div>
-                </div>
                 <div class="col-12">
-                    <button class="btn btn-primary" type="submit">提&nbsp;交&nbsp;保&nbsp;存</button>
+                    <button class="btn btn-primary" type="submit">开&nbsp;机&nbsp;启&nbsp;动</button>
                 </div>
                 <script>
                     (() => {
