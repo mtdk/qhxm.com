@@ -31,14 +31,23 @@
                 <?php if ($department_id == 2 && $role_id == 1): ?>
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            设备运行登记
+                            工单管理
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="../fssbjl.php">分散设备登记</a></li>
-                            <li><a class="dropdown-item" href="../ymsbjl.php">研磨设备登记</a></li>
-                            <li><a class="dropdown-item" href="../fqpfsbjl.php">废气设备登记</a></li>
-                            <li><a class="dropdown-item" href="../bsjsbjl.php">冰水机登记</a></li>
-                            <li><a class="dropdown-item" href="../kyjsbjl.php">空压机登记</a></li>
+                            <li><a class="dropdown-item" href="work_order_show.php">我要领单</a></li>
+                            <li><a class="dropdown-item" href="all_device.php">我要关机</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            手动登记
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="fqpfsbjl.php">废气设备登记</a></li>
+                            <li><a class="dropdown-item" href="kyjsbjl.php">空压机登记</a></li>
+                            <li><a class="dropdown-item" href="bsjsbjl.php">冰水机登记</a></li>
+                            <li><a class="dropdown-item" href="fssbjl.php">分散登记</a></li>
+                            <li><a class="dropdown-item" href="ymsbjl.php">研磨登记</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -52,14 +61,23 @@
                 <?php elseif ($department_id == 2 && $role_id == 2): ?>
                     <li class="nav-item dropdown">
                         <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                            设备运行登记
+                            工单管理
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="../fssbjl.php">分散设备登记</a></li>
-                            <li><a class="dropdown-item" href="../ymsbjl.php">研磨设备登记</a></li>
-                            <li><a class="dropdown-item" href="../fqpfsbjl.php">废气设备登记</a></li>
-                            <li><a class="dropdown-item" href="../bsjsbjl.php">冰水机登记</a></li>
-                            <li><a class="dropdown-item" href="../kyjsbjl.php">空压机登记</a></li>
+                            <li><a class="dropdown-item" href="work_order_show.php">我要领单</a></li>
+                            <li><a class="dropdown-item" href="all_device.php">我要关机</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <button class="btn btn-dark dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            手动登记
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" href="fqpfsbjl.php">废气设备登记</a></li>
+                            <li><a class="dropdown-item" href="kyjsbjl.php">空压机登记</a></li>
+                            <li><a class="dropdown-item" href="bsjsbjl.php">冰水机登记</a></li>
+                            <li><a class="dropdown-item" href="fssbjl.php">分散登记</a></li>
+                            <li><a class="dropdown-item" href="ymsbjl.php">研磨登记</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -132,7 +150,7 @@
                             工单管理
                         </button>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="#">工单登记</a></li>
+                            <li><a class="dropdown-item" href="work_order_insert.php">工单登记</a></li>
                         </ul>
                     </li>
                 <?php endif; ?>

@@ -10,7 +10,7 @@ $rows = $stmt->fetchAll();
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Signin Template · Bootstrap v5.2</title>
 
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <script>
         function UsCheck(str) {
             let xmlhttp;
@@ -42,7 +42,7 @@ $rows = $stmt->fetchAll();
         }
     </script>
     <!-- Custom styles for this template -->
-    <link href="./css/custom_styles/signin.css" rel="stylesheet">
+    <link href="bootstrap/css/sign-in/sign-in.css" rel="stylesheet">
 </head>
 <body class="text-center">
 

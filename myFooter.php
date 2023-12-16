@@ -1,4 +1,4 @@
-<footer class="footer fixed-bottom mt-auto py-3 bg-light">
+<footer class="footer fixed-bottom mt-auto py-sm-2 bg-light">
     <div class="container">
         <span class="text-muted"><?php echo $uname; ?>，欢迎登录系统。部门：<?php echo $department_name; ?></span>
     </div>

@@ -4,7 +4,10 @@ include __DIR__ . '/user_session/login_state.php';
 include __DIR__ . '/db/db.php';
 include __DIR__ . '/myHeader.php';
 include __DIR__ . '/myMenu.php';
-
+$work_orderid = trim(htmlspecialchars($_GET['id'])) ?? '';
+$pro_id = trim($_GET['pro_id']) ?? '';
+$bath_number = trim(htmlspecialchars($_GET['bath_number'])) ?? '';
+$remarks = trim(htmlspecialchars($_GET['remarks'])) ?? '';
 $stmt = $dbh->prepare("select machine_id,machine_name from fssb order by id");
 $stmt->execute();
 $rows = $stmt->fetchAll();
@@ -18,8 +21,8 @@ $rows = $stmt->fetchAll();
             </div>
             <form class="row g-3 needs-validation" novalidate="" action="fssbjl_save.php" method="post">
                 <div class="col-sm-2">
-                    <label for="validationmachine" class="form-label">分散设备选择</label>
-                    <select name="machine_id" class="form-select" id="validationmachine" required>
+                    <label for="machine_id" class="form-label">分散设备选择</label>
+                    <select name="machine_id" class="form-select" id="machine_id" required>
                         <option selected disabled value="">请选择...</option>
                         <?php
                         foreach ($rows as $key => $value) {
@@ -40,41 +43,57 @@ $rows = $stmt->fetchAll();
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <label for="validationDatetime" class="form-label">日期选择</label>
-                    <input type="text" class="form-control" id="validationDatetime" value="<?php echo date('Y-m-d'); ?>"
+                    <label for="register_date" class="form-label">日期选择</label>
+                    <input type="text" class="form-control" id="register_date" value="<?php echo date('Y-m-d'); ?>"
                            name="register_date" readonly required>
                     <div class="invalid-feedback">
                         请选择日期...
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <label for="validationProductid" class="form-label">产品编号</label>
-                    <input type="text" class="form-control" id="validationProductid" maxlength="10" name="pro_id"
-                           required>
+                    <label for="pro_id" class="form-label">产品编号</label>
+                    <?php if (!empty($pro_id)): ?>
+                        <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id"
+                               value="<?php echo $pro_id; ?>" required>
+                    <?php else: ?>
+                        <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id" required>
+                    <?php endif; ?>
                     <div class="invalid-feedback">
                         请输入产品编号...！
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <label for="validationBathnumber" class="form-label">批号</label>
-                    <input type="text" class="form-control" id="validationBathnumber" value="<?php echo date('Ymd'); ?>"
-                           name="bath_number" minlength="11" maxlength="11" required>
+                    <label for="bath_number" class="form-label">批号</label>
+                    <?php if (!empty($bath_number)): ?>
+                        <input type="text" class="form-control" id="bath_number" value="<?php echo $bath_number; ?>"
+                               name="bath_number" minlength="11" maxlength="11" required>
+                    <?php else: ?>
+                        <input type="text" class="form-control" id="bath_number" value="<?php echo date('Ymd'); ?>"
+                               name="bath_number" minlength="11" maxlength="11" required>
+                    <?php endif; ?>
                     <div class="invalid-feedback">
                         请输入批号...！
                     </div>
                 </div>
-                <div class="col-sm-1">
-                    <label for="validationStartAndStop" class="form-label">开机启动</label>
-                    <div class="form-check mt-1">
-                        <input type="radio" class="form-check-input" id="validationStart" value="开机"
-                               name="radio_stacked"
-                               required>
-                        <label class="form-check-label" for="validationStart">运行...</label>
-                        <div class="invalid-feedback">请选择开机运行...!</div>
-                    </div>
+                <div class="col-sm-2">
+                    <label for="remarks" class="form-label">备注</label>
+                    <?php if (!empty($remarks)): ?>
+                        <input type="text" class="form-control" id="remarks" name="remarks"
+                               value="<?php echo $remarks; ?>" minlength="11" maxlength="11">
+                    <?php else: ?>
+                        <input type="text" class="form-control" id="remarks" name="remarks" minlength="11"
+                               maxlength="11">
+                    <?php endif; ?>
                 </div>
+                <?php if (!empty($work_orderid)): ?>
+                    <input type="hidden" class="form-control" id="work_orderid" maxlength="10" name="work_orderid"
+                           value="<?php echo $work_orderid; ?>" required>
+                <?php else: ?>
+                    <input type="hidden" class="form-control" id="work_orderid" maxlength="10" name="work_orderid"
+                           required>
+                <?php endif; ?>
                 <div class="col-12">
-                    <button class="btn btn-primary" type="submit">提&nbsp;交&nbsp;保&nbsp;存</button>
+                    <button class="btn btn-primary" type="submit">开&nbsp;机</button>
                 </div>
                 <script>
                     (() => {
