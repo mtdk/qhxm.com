@@ -43,6 +43,26 @@ include __DIR__ . '/../myMenu.php';
                 i.image = datapair[1];
                 console.log(i.image);
             });
+
+            // dataURLtoFile:function (dataurl){
+            //     let arr = dataurl.split(','),
+            //         mime=arr[0].match(/:(.*?);/)[1],
+            //         bstr=atob(arr[1]),
+            //         n=bstr.length,
+            //         u8arr=new Uint8Array(n),
+            //         while(n--){
+            //         u8arr[n]=bstr.charCodeAt(n);
+            //     }
+            //     return new Blob([u8arr],{type:mime});
+            // },
+            // blobToFile:function(theBlob,fileName){
+            //   theBlob.lastModifiedDate=new Date();
+            //   theBlob.name=fileName;
+            //   return theBlob;
+            // },
+            //
+            // let blob=dataURLtoBlob(base64Data);
+            // let file=blobToFile(blob,imgName);
         </script>
     </main>
 <?php include __DIR__ . '/../myFooter.php'; ?>

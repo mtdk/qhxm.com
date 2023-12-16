@@ -6,7 +6,8 @@
 session_start();
 $uid = $_SESSION['uid'] ?? '';
 $uname = $_SESSION['uname'] ?? '';
-$uorg_id = $_SESSION['uorg_id'] ?? '';
-$uorg_name = $_SESSION['uorg_name'] ?? '';
+$department_id = $_SESSION['department_id'] ?? '';
+$department_name = $_SESSION['department_name'] ?? '';
+$role_id = $_SESSION['role_id'] ?? '';
 $msg = $_SESSION['msg'];
 $url = $_SESSION['url'];

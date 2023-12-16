@@ -48,11 +48,16 @@
                         设备记录查看(手机)
                     </button>
                     <ul class="dropdown-menu dropdown-menu-dark">
-                        <li><a class="dropdown-item" href="/data_show/fssb_rds_show_mob.php">分散设备记录查看(手机)</a></li>
-                        <li><a class="dropdown-item" href="/data_show/ymsb_rds_show_mob.php">研磨设备记录查看(手机)</a></li>
-                        <li><a class="dropdown-item" href="/data_show/fqpfsb_rds_show_mob.php">废气设备记录查看(手机)</a></li>
-                        <li><a class="dropdown-item" href="/data_show/bsjsb_rds_show_mob.php">冰水机记录查看(手机)</a></li>
-                        <li><a class="dropdown-item" href="/data_show/kyjsb_rds_show_mob.php">空压机记录查看(手机)</a></li>
+                        <li><a class="dropdown-item" href="/data_show/fssb_rds_show_mob.php">分散设备记录查看(手机)</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/data_show/ymsb_rds_show_mob.php">研磨设备记录查看(手机)</a>
+                        </li>
+                        <li><a class="dropdown-item"
+                               href="/data_show/fqpfsb_rds_show_mob.php">废气设备记录查看(手机)</a></li>
+                        <li><a class="dropdown-item" href="/data_show/bsjsb_rds_show_mob.php">冰水机记录查看(手机)</a>
+                        </li>
+                        <li><a class="dropdown-item" href="/data_show/kyjsb_rds_show_mob.php">空压机记录查看(手机)</a>
+                        </li>
                     </ul>
                 </li>
                 <li class="nav-item">

@@ -7,23 +7,19 @@ include __DIR__ . '/myMenu.php';
 
 $id = '';
 $send_uid = '';
-if ($_SESSION['uorg_id'] == '' || $_SESSION['uorg_id'] != 1000) {
-    $id = trim($_GET['id'] ? htmlspecialchars($_GET['id']) : '');
-    $send_uid = trim($_GET['uid'] ? htmlspecialchars($_GET['uid']) : '');
-    if ($id == '' || $send_uid == '') {
-        $_SESSION['msg'] = '参数传递错误，请与管理员联系，3秒后跳转回登录页面';
-        $_SESSION['url'] = 'fssbjl.php';
-        header('location:msgPage.php');
-        die();
-    }
-    if ($uid != $send_uid) {
-        $_SESSION['msg'] = '此设备不是你开启的，你不能进行关闭操作，3秒后跳转回登录页面';
-        $_SESSION['url'] = 'fssbjl.php';
-        header('location:msgPage.php');
-        die();
-    }
-} else {
-    $id = trim($_GET['id'] ? htmlspecialchars($_GET['id']) : '');
+$id = trim($_GET['id'] ? htmlspecialchars($_GET['id']) : '');
+$send_uid = trim($_GET['uid'] ? htmlspecialchars($_GET['uid']) : '');
+if ($id == '' || $send_uid == '') {
+    $_SESSION['msg'] = '参数传递错误，请与管理员联系，3秒后跳转回登录页面';
+    $_SESSION['url'] = 'fssbjl.php';
+    header('location:msgPage.php');
+    die();
+}
+if ($uid != $send_uid) {
+    $_SESSION['msg'] = '此设备不是你开启的，你不能进行关闭操作，3秒后跳转回登录页面';
+    $_SESSION['url'] = 'fssbjl.php';
+    header('location:msgPage.php');
+    die();
 }
 
 $stmt = $dbh->prepare("SELECT id,machine_id,register_date,register_time,pro_id,bath_number from fssbrecords where id=:id");

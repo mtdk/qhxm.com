@@ -13,7 +13,7 @@ if ($uid == '' || $upassword == '') {
     die();
 }
 
-$stmt = $dbh->prepare("select uid,uname,upassword,organi_id,organi_name from usersinfo_view where uid=:uid");
+$stmt = $dbh->prepare("select uid,uname,upassword,department_id,department_name,role_id from usersinfo_view where uid=:uid");
 $stmt->bindValue(':uid', $uid);
 $stmt->execute();
 $result = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -25,18 +25,19 @@ if (count($result) == 0) {
     $_SESSION['msg'] = '用户密码错误，3秒后跳转回登录页面';
     $_SESSION['url'] = 'login.php';
 } else {
-    $_SESSION['uid'] = $result['uid'];
-    $_SESSION['uname'] = $result['uname'];
-    $_SESSION['uorg_id'] = $result['organi_id'];
-    $_SESSION['uorg_name']=$result['organi_name'];
-    if ($remember_me == '0') {
-        setcookie("remeber_myid", $uid, time() + 3600 * 24);
-        setcookie("uspasswd", $upassword, time() + 3600 * 24);
-    } else {
-        setcookie("remeber_myid", '');
-        setcookie("uspasswd", '');
-    }
-    $_SESSION['msg'] = '登录成功，3秒后跳转到系统首页';
-    $_SESSION['url'] = 'index.php';
+        $_SESSION['uid'] = $result['uid'];
+        $_SESSION['uname'] = $result['uname'];
+        $_SESSION['department_id'] = $result['department_id'];
+        $_SESSION['department_name'] = $result['department_name'];
+        $_SESSION['role_id'] = $result['role_id'];
+        if ($remember_me == '0') {
+            setcookie("remeber_myid", $uid, time() + 3600 * 24);
+            setcookie("uspasswd", $upassword, time() + 3600 * 24);
+        } else {
+            setcookie("remeber_myid", '');
+            setcookie("uspasswd", '');
+        }
+        $_SESSION['msg'] = '登录成功，3秒后跳转到系统首页';
+        $_SESSION['url'] = 'index.php';
 }
 header('location:msgPage.php');

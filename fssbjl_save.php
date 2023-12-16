@@ -1,5 +1,13 @@
 <?php
-include __DIR__ . '/db/ym_fs_parament.php';
+include_once __DIR__ . '/user_session/user_session.php';
+include_once __DIR__ . '/user_session/login_state.php';
+include_once __DIR__ . '/db/db.php';
+$machine_id = trim($_POST['machine_id'] ? htmlspecialchars($_POST['machine_id']) : '');
+$register_time = trim($_POST['register_time'] ? htmlspecialchars($_POST['register_time']) : '');
+$register_date = trim($_POST['register_date'] ? htmlspecialchars($_POST['register_date']) : '');
+$pro_id = trim($_POST['pro_id'] ? strtoupper(htmlspecialchars($_POST['pro_id'])) : '');
+$bath_number = trim($_POST['bath_number'] ? htmlspecialchars($_POST['bath_number']) : '');
+$machine_status = trim($_POST['radio_stacked'] ? htmlspecialchars($_POST['radio_stacked']) : '');
 
 if (empty($machine_id)) {
     $_SESSION['msg'] = "设备编号不能为空";
@@ -37,7 +45,7 @@ if (empty($machine_id)) {
     header('location:msgPage.php');
     die();
 } else {
-    $stmt = $dbh->prepare("SELECT machine_id from fssbrecords where machine_id=:machine_id and machine_status=:machine_status");
+    $stmt = $dbh->prepare("select machine_id from fssbrecords where machine_id = :machine_id and machine_status = :machine_status");
     $stmt->bindParam(':machine_id', $machine_id);
     $stmt->bindParam(':machine_status', $machine_status);
     $stmt->execute();
@@ -49,19 +57,18 @@ if (empty($machine_id)) {
         die();
     }
 
+    $sth = $dbh->prepare("insert into fssbrecords (machine_id,register_date,register_time,pro_id,bath_number,machine_status,uid) values(:machine_id,:register_date,:register_time,:pro_id,:bath_number,:machine_status,:uid)");
+    $sth->bindParam(':machine_id',$machine_id);
+    $sth->bindParam(':register_date',$register_date);
+    $sth->bindParam(':register_time',$register_time);
+    $sth->bindParam(':pro_id',$pro_id);
+    $sth->bindParam(':bath_number',$bath_number);
+    $sth->bindParam(':machine_status',$machine_status);
+    $sth->bindParam(':uid',$uid);
+    $sth->execute();
+    $affectedRows = $sth->rowCount();
 
-    $sql = "INSERT INTO fssbrecords (machine_id,register_time,register_date,pro_id,bath_number,machine_status,uid) VALUES (?,?,?,?,?,?,?)";
-    $stmt = $dbh->prepare($sql);
-    $stmt->bindValue('1', $machine_id);
-    $stmt->bindValue('2', $register_time);
-    $stmt->bindValue('3', $register_date);
-    $stmt->bindValue('4', $pro_id);
-    $stmt->bindValue('5', $bath_number);
-    $stmt->bindValue('6', $machine_status);
-    $stmt->bindValue('7', $uid);
-    $is = $stmt->execute();
-
-    if ($is) {
+    if ($affectedRows > 0) {
         $_SESSION['msg'] = "数据已提交";
     } else {
         $_SESSION['msg'] = "数据写入失败，请与管理联系，3秒后返回录入页面";

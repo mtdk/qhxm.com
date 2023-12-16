@@ -1,5 +1,5 @@
 <?php include __DIR__ . '/db/db.php';
-$stmt = $dbh->prepare("select uid,uname from usertb");
+$stmt = $dbh->prepare("select uid,uname from usertb where userstate_id = 1");
 $stmt->execute();
 $rows = $stmt->fetchAll();
 ?>
@@ -13,7 +13,7 @@ $rows = $stmt->fetchAll();
     <link href="./css/bootstrap.min.css" rel="stylesheet">
     <script>
         function UsCheck(str) {
-            var xmlhttp;
+            let xmlhttp;
             if (str.length === 0) {
                 document.getElementById("upassword").innerHTML = "";
                 return;
@@ -52,6 +52,7 @@ $rows = $stmt->fetchAll();
         <h1 class="h3 mb-3 fw-normal">请&nbsp;登&nbsp;录&nbsp;系&nbsp;统</h1>
 
         <div class="form-floating">
+            <label for="uid"></label>
             <select class="form-select" id="uid" name="uid"
                     onchange="UsCheck(this.options[this.options.selectedIndex].value)" required>
                 <option selected disabled value="">请选择您的姓名...</option>
@@ -77,6 +78,9 @@ $rows = $stmt->fetchAll();
         </div>
         <div class="form-floating mt-3">
             <a href="usersinfo/register.php" class="w-100 btn btn-lg btn-primary">注&nbsp;册</a>
+        </div>
+        <div class="form-floating mt-3">
+            <a href="Admin_folder/admin_login.php" class="w-100 btn btn-lg btn-primary">管理员登录</a>
         </div>
         <p class="mt-5 mb-3 text-muted">&copy;Xmtdk 2017–2025</p>
     </form>
