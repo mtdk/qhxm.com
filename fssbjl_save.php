@@ -54,35 +54,10 @@ if (empty($machine_id)) {
         header('location:msgPage.php');
         die();
     } else {
-        $sth = $dbh->prepare("insert into fssbrecords (machine_id,register_date,register_time,pro_id,bath_number,machine_status,uid) values(:machine_id,:register_date,:register_time,:pro_id,:bath_number,:machine_status,:uid)");
-        $sth->bindParam(':machine_id', $machine_id);
-        $sth->bindParam(':register_date', $register_date);
-        $sth->bindParam(':register_time', $register_time);
-        $sth->bindParam(':pro_id', $pro_id);
-        $sth->bindParam(':bath_number', $bath_number);
-        $sth->bindParam(':machine_status', $machine_status);
-        $sth->bindParam(':uid', $uid);
-        $sth->execute();
         if (!empty($work_orderid)) {
-            $sth = $dbh->prepare("update work_order set work_state = :work_state where id = :work_orderid");
-            $sth->bindParam(':work_state', $work_state);
-            $sth->bindParam(':work_orderid', $work_orderid);
-            $sth->execute();
-            try {
-                $dbh->commit();
-                $_SESSION['msg'] = "数据已提交";
-            } catch (PDOException $e) {
-                $_SESSION['msg'] = "提交失败: " . $e->getMessage();
-            }
+            include_once __DIR__.'/fssbjl_save_auto.php';
         } else {
-            $affectedRows = $sth->rowCount();
-            if ($affectedRows < 0) {
-                $_SESSION['msg'] = "数据保存失败！";
-            } elseif ($affectedRows > 0) {
-                $_SESSION['msg'] = "数据保存成功！";
-            } else {
-                $_SESSION['msg'] = "没有受影响的数据！";
-            }
+            include_once __DIR__.'/fssbjl_save_other.php';
         }
     }
     $dbh = null;
