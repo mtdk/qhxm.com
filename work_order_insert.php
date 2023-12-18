@@ -6,7 +6,7 @@ include __DIR__ . '/myHeader.php';
 include __DIR__ . '/myMenu.php';
 ?>
     <main class="flex-shrink-0">
-        <div class="container mt-lg-4">
+        <div class="container mt-lg-4 overflow-y-scroll">
             <div class="row">
                 <div class="text-center mb-2">
                     <h2>工单输入</h2>

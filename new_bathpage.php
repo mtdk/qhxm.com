@@ -1,9 +1,10 @@
 <?php
-include __DIR__ . '/user_session/user_session.php';
-include __DIR__ . '/user_session/login_state.php';
+//include __DIR__ . '/user_session/user_session.php';
+//include __DIR__ . '/user_session/login_state.php';
 include __DIR__ . '/db/db.php';
 include __DIR__ . '/myHeader.php';
 include __DIR__ . '/myMenu.php';
+$uid = '039948SJBF441J28';
 ?>
     <main class="flex-shrink-0">
         <div class="container mt-lg-4">
@@ -59,20 +60,31 @@ include __DIR__ . '/myMenu.php';
                                     </thead>
                                     <tbody>
                                     <?php
-                                    $stmt = $dbh->prepare("select id,bath_number,number_state from bath_numbertb where number_state='open' order by id desc");
+                                    $rd = date('Y-m-d');
+                                    $stmt = $dbh->prepare("SELECT id,machine_id,register_time,machine_status from fssbrecords where register_date=:register_date and uid=:uid and machine_status='开机'");
+                                    $stmt->bindParam(':register_date', $rd);
+                                    $stmt->bindParam(':uid', $uid);
                                     $stmt->execute();
                                     $rows = $stmt->fetchAll();
-                                    $lenght = count($rows);
-                                    for ($i = 0; $i < $lenght; $i++) { ?>
+                                    $length = count($rows);
+                                    if ($length > 0) :
+                                        for ($i = 0; $i < $length; $i++) { ?>
+                                            <tr>
+                                                <th scope="row"><?php echo $i + 1; ?></th>
+                                                <td><?php echo $rows[$i]['machine_id']; ?></td>
+                                                <td><?php echo substr($rows[$i]['register_time'], 0, 5); ?></td>
+                                                <td><?php echo $rows[$i]['machine_status']; ?></td>
+                                                <td>
+                                                    <a href="fssbjl_down_check.php?id=<?php echo $rows[$i]['id']; ?>&uid=<?php echo $uid; ?>"
+                                                       class="btn btn-outline-success">关机</a>
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    <?php else: ?>
                                         <tr>
-                                            <th scope="row"><?php echo $i + 1; ?></th>
-                                            <td><?php echo $rows[$i]['bath_number']; ?></td>
-                                            <td><?php echo $rows[$i]['number_state']; ?></td>
-                                            <td><a href="#?id=<?php echo $rows[$i]['id']; ?>&uid=<?php echo $uid; ?>"
-                                                   class="btn btn-outline-success">关闭</a>
-                                            </td>
+                                            <th scope="row" colspan="5" class="text-center">无记录</th>
                                         </tr>
-                                    <?php } ?>
+                                    <?php endif; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -100,21 +112,14 @@ include __DIR__ . '/myMenu.php';
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <?php
-                                        $stmt = $dbh->prepare("select id,bath_number,number_state from bath_numbertb where number_state='off' order by id desc");
-                                        $stmt->execute();
-                                        $rows = $stmt->fetchAll();
-                                        $lenght = count($rows);
-                                        for ($i = 0; $i < $lenght; $i++) { ?>
-                                            <tr>
-                                                <th scope="row"><?php echo $i + 1; ?></th>
-                                                <td><?php echo $rows[$i]['bath_number']; ?></td>
-                                                <td><?php echo $rows[$i]['number_state']; ?></td>
-                                                <td><a href="#?id=<?php echo $rows[$i]['id']; ?>&uid=<?php echo $uid; ?>"
-                                                       class="btn btn-outline-success">关闭</a>
-                                                </td>
-                                            </tr>
-                                        <?php } ?>
+                                        <tr>
+                                            <th scope="row"></th>
+                                            <td></td>
+                                            <td></td>
+                                            <td><a href="#"
+                                                   class="btn btn-outline-success">关闭</a>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>

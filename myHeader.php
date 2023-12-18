@@ -6,4 +6,4 @@
     <title>Bootstrap demo</title>
     <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
+<body class="d-flex flex-column h-100">

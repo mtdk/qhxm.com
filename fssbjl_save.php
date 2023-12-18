@@ -55,9 +55,9 @@ if (empty($machine_id)) {
         die();
     } else {
         if (!empty($work_orderid)) {
-            include_once __DIR__.'/fssbjl_save_auto.php';
+            include_once __DIR__ . '/fssbjl_insert_auto.php';
         } else {
-            include_once __DIR__.'/fssbjl_save_other.php';
+            include_once __DIR__ . '/fssbjl_insert_other.php';
         }
     }
     $dbh = null;

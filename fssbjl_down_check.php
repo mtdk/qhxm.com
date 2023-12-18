@@ -5,8 +5,6 @@ include __DIR__ . '/db/db.php';
 include __DIR__ . '/myHeader.php';
 include __DIR__ . '/myMenu.php';
 
-$id = '';
-$send_uid = '';
 $id = trim($_GET['id'] ? htmlspecialchars($_GET['id']) : '');
 $send_uid = trim($_GET['uid'] ? htmlspecialchars($_GET['uid']) : '');
 if ($id == '' || $send_uid == '') {
@@ -31,7 +29,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
     <div class="container mt-lg-4">
         <div class="row">
             <div class="text-center mb-2">
-                <h2>分散设备运行记录</h2>
+                <h3>分散设备运行记录</h3>
             </div>
         </div>
         <form class="row g-3 needs-validation" novalidate="" action="fssbjl_down_save.php" method="post">
@@ -89,17 +87,11 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
                     请选择时间...
                 </div>
             </div>
-            <div class="col-sm-1">
-                <label for="validationStartAndStop" class="form-label">关机停止</label>
-                <div class="form-check mt-1">
-                    <input type="radio" class="form-check-input" id="validationStop" value="关机" name="radio_stacked"
-                           required>
-                    <label class="form-check-label" for="validationStop">停止...</label>
-                    <div class="invalid-feedback">请选择关机停止...!</div>
+            <div class="col-sm-2">
+                <div class="form-check form-check-inline">
+                    <input type="checkbox" class="form-check-input" id="work_state" value="1" name="work_state" checked>关闭工单
                 </div>
-            </div>
-            <div class="col-12">
-                <button class="btn btn-primary" type="submit">提&nbsp;交&nbsp;保&nbsp;存</button>
+                <button class="btn btn-primary btn-sm" type="submit">关&nbsp;机</button>
             </div>
             <script>
                 (() => {
