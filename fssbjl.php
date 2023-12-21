@@ -5,10 +5,9 @@ include __DIR__ . '/db/db.php';
 include __DIR__ . '/myHeader.php';
 include __DIR__ . '/myMenu.php';
 
-$work_orderid = trim(htmlspecialchars($_GET['id'])) ?? '';
-$pro_id = trim($_GET['pro_id']) ?? '';
-$bath_number = trim(htmlspecialchars($_GET['bath_number'])) ?? '';
-$remarks = trim(htmlspecialchars($_GET['remarks'])) ?? '';
+// 工单序号
+$work_id = trim(base64_decode(htmlspecialchars($_GET['id']))) ?? '';
+
 $stmt = $dbh->prepare("select machine_id,machine_name from fssb order by id");
 $stmt->execute();
 $rows = $stmt->fetchAll();
@@ -17,7 +16,7 @@ $rows = $stmt->fetchAll();
         <div class="container mt-lg-4">
             <div class="row">
                 <div class="text-center mb-2">
-                    <h2>分散设备运行记录</h2>
+                    <h3>分散设备运行记录</h3>
                 </div>
             </div>
             <form class="row g-3 needs-validation" novalidate="" action="fssbjl_save.php" method="post">
@@ -51,11 +50,18 @@ $rows = $stmt->fetchAll();
                         请选择日期...
                     </div>
                 </div>
+                <?php
+                if (!empty($work_id)) {
+                    $sth = $dbh->prepare("select * from work_order where id = :work_id");
+                    $sth->bindParam(':work_id', $work_id);
+                    $sth->execute();
+                    $result = $sth->fetchAll()[0];
+                }
+                ?>
                 <div class="col-sm-2">
                     <label for="pro_id" class="form-label">产品编号</label>
-                    <?php if (!empty($pro_id)): ?>
-                        <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id"
-                               value="<?php echo $pro_id; ?>" required>
+                    <?php if (!empty($result['pro_id'])): ?>
+                        <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id" value="<?php echo $result['pro_id']; ?>" required>
                     <?php else: ?>
                         <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id" required>
                     <?php endif; ?>
@@ -65,12 +71,10 @@ $rows = $stmt->fetchAll();
                 </div>
                 <div class="col-sm-2">
                     <label for="bath_number" class="form-label">批号</label>
-                    <?php if (!empty($bath_number)): ?>
-                        <input type="text" class="form-control" id="bath_number" value="<?php echo $bath_number; ?>"
-                               name="bath_number" minlength="11" maxlength="11" required>
+                    <?php if (!empty($result['bath_number'])): ?>
+                        <input type="text" class="form-control" id="bath_number" value="<?php echo $result['bath_number']; ?>" name="bath_number" minlength="11" maxlength="11" required>
                     <?php else: ?>
-                        <input type="text" class="form-control" id="bath_number" value="<?php echo date('Ymd'); ?>"
-                               name="bath_number" minlength="11" maxlength="11" required>
+                        <input type="text" class="form-control" id="bath_number" value="<?php echo date('Ymd'); ?>" name="bath_number" minlength="11" maxlength="11" required>
                     <?php endif; ?>
                     <div class="invalid-feedback">
                         请输入批号...！
@@ -78,23 +82,25 @@ $rows = $stmt->fetchAll();
                 </div>
                 <div class="col-sm-2">
                     <label for="remarks" class="form-label">备注</label>
-                    <?php if (!empty($remarks)): ?>
-                        <input type="text" class="form-control" id="remarks" name="remarks"
-                               value="<?php echo $remarks; ?>" minlength="11" maxlength="11">
+                    <?php if (!empty($result['remarks'])): ?>
+                        <input type="text" class="form-control" id="remarks" name="remarks" value="<?php echo $result['remarks']; ?>" maxlength="11">
                     <?php else: ?>
-                        <input type="text" class="form-control" id="remarks" name="remarks" minlength="11"
-                               maxlength="11">
+                        <input type="text" class="form-control" id="remarks" name="remarks" maxlength="11" value="无">
                     <?php endif; ?>
                 </div>
-                <?php if (!empty($work_orderid)): ?>
-                    <input type="hidden" class="form-control" id="work_orderid" maxlength="10" name="work_orderid"
-                           value="<?php echo $work_orderid; ?>" required>
+                <?php if (!empty($work_id)): ?>
+                    <input type="hidden" class="form-control" id="work_id" maxlength="10" name="work_id" value="<?php echo $work_id; ?>" readonly>
                 <?php else: ?>
-                    <input type="hidden" class="form-control" id="work_orderid" maxlength="10" name="work_orderid"
-                           required>
+                    <input type="hidden" class="form-control" id="work_id" maxlength="10" name="work_id" value="-1" readonly>
+                <?php endif; ?>
+                <?php if (!empty($result['technology_target'])): ?>
+                    <input type="hidden" class="form-control" id="technology_target" maxlength="10" name="technology_target" value="<?php echo $result['technology_target']; ?>" readonly>
+                <?php else: ?>
+                    <input type="hidden" class="form-control" id="technology_target" maxlength="10" name="technology_target" value="FS" readonly>
                 <?php endif; ?>
                 <div class="col-12">
-                    <button class="btn btn-primary" type="submit">开&nbsp;机</button>
+                    <button class="btn btn-primary btn-sm" type="submit">开&nbsp;机</button>
+                    &nbsp;<a class="btn btn-outline-secondary btn-sm" href="work_order_show.php">返回</a>
                 </div>
                 <script>
                     (() => {
@@ -118,7 +124,7 @@ $rows = $stmt->fetchAll();
             </form>
         </div>
         <div class="container mt-lg-4">
-            <table class="table table-hover text-primary">
+            <table class="table table-hover text-primary text-sm-center">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -144,7 +150,7 @@ $rows = $stmt->fetchAll();
                         <td><?php echo substr($rows[$i]['register_time'], 0, 5); ?></td>
                         <td><?php echo $rows[$i]['machine_status']; ?></td>
                         <td><a href="fssbjl_down_check.php?id=<?php echo $rows[$i]['id']; ?>&uid=<?php echo $uid; ?>"
-                               class="btn btn-outline-success">关机</a>
+                               class="btn btn-outline-success btn-sm">关机</a>
                         </td>
                     </tr>
                 <?php } ?>

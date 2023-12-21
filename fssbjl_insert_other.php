@@ -1,5 +1,6 @@
 <?php
-$sth = $dbh->prepare("insert into fssbrecords (machine_id,register_date,register_time,pro_id,bath_number,machine_status,uid) values(:machine_id,:register_date,:register_time,:pro_id,:bath_number,:machine_status,:uid)");
+$sql = "insert into fssbrecords (machine_id,register_date,register_time,pro_id,bath_number,machine_status,uid,work_id,technology_target) values(:machine_id,:register_date,:register_time,:pro_id,:bath_number,:machine_status,:uid,:work_id,:technology_target)";
+$sth = $dbh->prepare($sql);
 $sth->bindParam(':machine_id', $machine_id);
 $sth->bindParam(':register_date', $register_date);
 $sth->bindParam(':register_time', $register_time);
@@ -7,6 +8,8 @@ $sth->bindParam(':pro_id', $pro_id);
 $sth->bindParam(':bath_number', $bath_number);
 $sth->bindParam(':machine_status', $machine_status);
 $sth->bindParam(':uid', $uid);
+$sth->bindParam(':work_id',$work_id);
+$sth->bindParam(':technology_target',$technology_target);
 $sth->execute();
 $affectedRows = $sth->rowCount();
 if ($affectedRows < 0) {

@@ -5,18 +5,26 @@ include __DIR__ . '/db/db.php';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pro_id = trim(strtoupper(htmlspecialchars($_POST['pro_id'])) ?? '');
     $bath_number = trim(htmlspecialchars($_POST['bath_number']) ?? '');
+    $bath_number_index = trim(htmlspecialchars($_POST['bath_number_index']) ?? '');
     $remarks = trim(htmlspecialchars($_POST['remarks']) ?? '');
+    $technology_target = trim(htmlspecialchars($_POST['technology_target']) ?? '');
 
     if (empty($pro_id)) {
         $_SESSION['msg'] = '编号不能为空!';
     } elseif (empty($bath_number)) {
         $_SESSION['msg'] = '批号不能为空!';
+    } elseif (empty($bath_number_index)) {
+        $_SESSION['msg'] = '批次序号不能为空';
+    } elseif (empty($technology_target)) {
+        $_SESSION['msg'] = '生产工艺选项不能为空';
     } else {
         //  提交数据
-        $sth = $dbh->prepare("insert into work_order (pro_id,bath_number,remarks) values(:pro_id,:bath_number,:remarks)");
+        $bath_number_all = $bath_number . $bath_number_index;   // 批号=年月日(yyyymmdd)+序号
+        $sth = $dbh->prepare("insert into work_order (pro_id,bath_number,remarks,technology_target) values(:pro_id,:bath_number_all,:remarks,:technology_target)");
         $sth->bindParam(':pro_id', $pro_id);
-        $sth->bindParam('bath_number', $bath_number);
+        $sth->bindParam('bath_number_all', $bath_number_all);
         $sth->bindParam(':remarks', $remarks);
+        $sth->bindParam(':technology_target', $technology_target);
         $sth->execute();
         $affectedRows = $sth->rowCount();
 

@@ -9,7 +9,7 @@ include __DIR__ . '/myMenu.php';
         <div class="container mt-lg-4 overflow-y-scroll">
             <div class="row">
                 <div class="text-center mb-2">
-                    <h2>工单输入</h2>
+                    <h3>工单输入</h3>
                 </div>
             </div>
             <form class="row g-3 needs-validation" novalidate="" action="work_order_save.php" method="post">
@@ -24,9 +24,17 @@ include __DIR__ . '/myMenu.php';
                 <div class="col-sm-2">
                     <label for="bath_number" class="form-label">批号</label>
                     <input type="text" class="form-control" id="bath_number" value="<?php echo date('Ymd'); ?>"
-                           name="bath_number" minlength="11" maxlength="11" required>
+                           name="bath_number" minlength="11" maxlength="11" readonly required>
                     <div class="invalid-feedback">
                         请输入批号...！
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label for="bath_number_index" class="form-label">批次序号</label>
+                    <input type="text" class="form-control" id="bath_number_index" name="bath_number_index"
+                           minlength="3" maxlength="3" required>
+                    <div class="invalid-feedback">
+                        请输入批次序号...！
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -37,8 +45,19 @@ include __DIR__ . '/myMenu.php';
                         请输入客户名称...！
                     </div>
                 </div>
+                <div class="col-sm-2">
+                    <label for="technology_target" class="form-label">工艺选择</label>
+                    <select name="technology_target" class="form-select" id="technology_target" required>
+                        <option selected disabled value="">请选择生产工艺...</option>
+                        <option value="FS">分散</option>
+                        <option value="YM">研磨</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        请选择生产设备...
+                    </div>
+                </div>
                 <div class="col-12">
-                    <button class="btn btn-primary" type="submit">提&nbsp;交&nbsp;保&nbsp;存</button>
+                    <button class="btn btn-primary btn-sm" type="submit">提&nbsp;交&nbsp;保&nbsp;存</button>
                 </div>
                 <script>
                     (() => {
@@ -61,7 +80,7 @@ include __DIR__ . '/myMenu.php';
                 </script>
             </form>
         </div>
-        <div class="container mt-lg-4">
+        <div class="container mt-lg-3">
             <table class="table table-hover text-primary">
                 <thead>
                 <tr>

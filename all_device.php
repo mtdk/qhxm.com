@@ -20,9 +20,9 @@ include __DIR__ . '/myMenu.php';
                     $length = count($rows);
                     ?>
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                            data-bs-target="#flush-collapseOne" aria-expanded="false"
+                            data-bs-target="#flush-collapseOne" aria-expanded="true"
                             aria-controls="flush-collapseOne">
-                        分散设备&nbsp;<span class="badge text-bg-info"><?php echo $length ? : 0; ?></span>
+                        分散设备&nbsp;<span class="badge text-bg-info"><?php echo $length ?: 0; ?></span>
                     </button>
                 </h2>
                 <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
@@ -55,7 +55,7 @@ include __DIR__ . '/myMenu.php';
                                 <?php } ?>
                             <?php else: ?>
                                 <tr>
-                                    <th scope="row" colspan="5" class="text-center">无记录</th>
+                                    <th scope="row" colspan="5" class="text-sm-center">无记录</th>
                                 </tr>
                             <?php endif; ?>
                             </tbody>
@@ -78,7 +78,7 @@ include __DIR__ . '/myMenu.php';
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#flush-collapseTwo" aria-expanded="false"
                             aria-controls="flush-collapseTwo">
-                        研磨设备&nbsp;<span class="badge text-bg-info"><?php echo $length ? : 0; ?></span>
+                        研磨设备&nbsp;<span class="badge text-bg-info"><?php echo $length ?: 0; ?></span>
                     </button>
                 </h2>
                 <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
@@ -112,7 +112,7 @@ include __DIR__ . '/myMenu.php';
                                     <?php } ?>
                                 <?php else: ?>
                                     <tr>
-                                        <th scope="row" colspan="5" class="text-center">无记录</th>
+                                        <th scope="row" colspan="5" class="text-sm-center">无记录</th>
                                     </tr>
                                 <?php endif; ?>
                                 </tbody>
@@ -135,7 +135,7 @@ include __DIR__ . '/myMenu.php';
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#flush-collapseThree" aria-expanded="false"
                             aria-controls="flush-collapseThree">
-                        废气设备&nbsp;<span class="badge text-bg-info"><?php echo $length ? : 0; ?></span>
+                        废气设备&nbsp;<span class="badge text-bg-info"><?php echo $length ?: 0; ?></span>
                     </button>
                 </h2>
                 <div id="flush-collapseThree" class="accordion-collapse collapse"
@@ -168,7 +168,7 @@ include __DIR__ . '/myMenu.php';
                                     <?php } ?>
                                 <?php else: ?>
                                     <tr>
-                                        <th scope="row" colspan="5" class="text-center">无记录</th>
+                                        <th scope="row" colspan="5" class="text-sm-center">无记录</th>
                                     </tr>
                                 <?php endif; ?>
                                 </tbody>
@@ -191,7 +191,7 @@ include __DIR__ . '/myMenu.php';
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#flush-collapseFour" aria-expanded="false"
                             aria-controls="flush-collapseFour">
-                        空压设备&nbsp;<span class="badge text-bg-info"><?php echo $length ? : 0; ?></span>
+                        空压设备&nbsp;<span class="badge text-bg-info"><?php echo $length ?: 0; ?></span>
                     </button>
                 </h2>
                 <div id="flush-collapseFour" class="accordion-collapse collapse"
@@ -224,7 +224,7 @@ include __DIR__ . '/myMenu.php';
                                     <?php } ?>
                                 <?php else: ?>
                                     <tr>
-                                        <th scope="row" colspan="5" class="text-center">无记录</th>
+                                        <th scope="row" colspan="5" class="text-sm-center">无记录</th>
                                     </tr>
                                 <?php endif; ?>
                                 </tbody>
@@ -247,7 +247,7 @@ include __DIR__ . '/myMenu.php';
                     <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             data-bs-target="#flush-collapseFive" aria-expanded="false"
                             aria-controls="flush-collapseFive">
-                        冰水设备&nbsp;<span class="badge text-bg-info"><?php echo $length ? : 0; ?></span>
+                        冰水设备&nbsp;<span class="badge text-bg-info"><?php echo $length ?: 0; ?></span>
                     </button>
                 </h2>
                 <div id="flush-collapseFive" class="accordion-collapse collapse" aria-labelledby="flush-headingFive"
@@ -280,7 +280,7 @@ include __DIR__ . '/myMenu.php';
                                     <?php } ?>
                                 <?php else: ?>
                                     <tr>
-                                        <th scope="row" colspan="5" class="text-center">无记录</th>
+                                        <th scope="row" colspan="5" class="text-sm-center">无记录</th>
                                     </tr>
                                 <?php endif; ?>
                                 </tbody>
