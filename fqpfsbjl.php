@@ -47,36 +47,8 @@ $rows = $stmt->fetchAll();
                     请选择时间...
                 </div>
             </div>
-            <div class="col-sm-1">
-                <label for="validationStartAndStop" class="form-label">开机启动</label>
-                <div class="form-check mt-1">
-                    <input type="radio" class="form-check-input" id="validationStart" value="开机" name="radio_stacked"
-                           required>
-                    <label class="form-check-label" for="validationStart">运行...</label>
-                    <div class="invalid-feedback">请选择开机运行...!</div>
-                </div>
-            </div>
-            <div class="col-sm-1">
-                <label for="validationStartAndStop" class="form-label">运行状态</label>
-                <div class="form-check mt-1">
-                    <input class="form-check-input" type="radio" value="正常" name="radioMachineStatus" required>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        正常
-                    </label>
-                </div>
-            </div>
-            <div class="col-sm-1">
-                <label for="validationStartAndStop" class="form-label">运行状态</label>
-                <div class="form-check mt-1">
-                    <input class="form-check-input" type="radio" value="异常" name="radioMachineStatus" required>
-                    <label class="form-check-label" for="flexCheckDefault">
-                        异常
-                    </label>
-                    <div class="invalid-feedback">请选择运行状态...!</div>
-                </div>
-            </div>
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">提&nbsp;交&nbsp;保&nbsp;存</button>
+                <button class="btn btn-primary" type="submit">开&nbsp;机</button>
             </div>
             <script>
                 (() => {

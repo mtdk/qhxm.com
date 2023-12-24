@@ -12,7 +12,7 @@ include __DIR__ . '/../myMenu.php';
             </div>
         </div>
         <script src="../js/3.6.6/jquery.js"></script>
-        <script src="../js/jSignature.min.js"></script>
+        <script src="../bootstrap/js/jSignature.min.js"></script>
         <script type="text/javascript">
             let param = {
                 width: '100%',
