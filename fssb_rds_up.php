@@ -1,14 +1,14 @@
 <?php
-include __DIR__ . '/../user_session/user_session.php';
-include __DIR__ . '/../user_session/userinfo_check.php';
-include __DIR__ . '/../db/db.php';
-include __DIR__ . '/../myHeader.php';
-include __DIR__ . '/../myMenu.php';
+include __DIR__ . '/user_session/user_session.php';
+include __DIR__ . '/user_session/login_state.php';
+include __DIR__ . '/db/db.php';
+include __DIR__ . '/myHeader.php';
+include __DIR__ . '/myMenu.php';
 ?>
     <main class="flex-shrink-0">
         <div class="container mt-lg-auto">
             <table class="table caption-top table-hover table-success text-primary table-sm text-center">
-                <caption><h4><span style="color: black">未关停废气设备</span></h4></caption>
+                <caption><h4><span style="color: black">未关停分散设备</span></h4></caption>
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -16,6 +16,8 @@ include __DIR__ . '/../myMenu.php';
                     <th scope="col">设备编号</th>
                     <th scope="col">启动日期</th>
                     <th scope="col">启动时间</th>
+                    <th scope="col">产品编号</th>
+                    <th scope="col">产品批号</th>
                     <th scope="col">当前状态</th>
                     <th scope="col">操作员</th>
                     <th scope="col">#</th>
@@ -23,7 +25,7 @@ include __DIR__ . '/../myMenu.php';
                 </thead>
                 <tbody id="tbody">
                 <?php
-                $stmt = $dbh->prepare("SELECT id,machine_id,register_date,register_time,machine_state,uname FROM fqpfsbjl_show where machine_state='开机' order by register_date,register_time");
+                $stmt = $dbh->prepare("SELECT id,machine_id,register_date,register_time,pro_id,bath_number,machine_status,uname,uid FROM fssbjl_show where machine_status='开机' order by register_date,register_time");
                 $stmt->execute();
                 $rows = $stmt->fetchAll();
                 $length = count($rows);
@@ -34,11 +36,13 @@ include __DIR__ . '/../myMenu.php';
                         <td><?php echo $rows[$i]['machine_id']; ?></td>
                         <td><?php echo $rows[$i]['register_date']; ?></td>
                         <td><?php echo substr($rows[$i]['register_time'], 0, 5); ?></td>
-                        <td><?php echo $rows[$i]['machine_state']; ?></td>
+                        <td><?php echo $rows[$i]['pro_id']; ?></td>
+                        <td><?php echo $rows[$i]['bath_number']; ?></td>
+                        <td><?php echo $rows[$i]['machine_status']; ?></td>
                         <td><?php echo $rows[$i]['uname']; ?></td>
                         <td><a class="btn btn-outline-success btn-sm"
                                style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .7rem;"
-                               href="../fqpfsbjl_down_check.php?id=<?php echo $rows[$i]['id']; ?>">关机</a>
+                               href="fssbjl_down_check.php?id=<?php echo $rows[$i]['id']; ?>&uid=<?php echo $uid; ?>">关机</a>
                         </td>
                     </tr>
                 <?php }
@@ -48,4 +52,4 @@ include __DIR__ . '/../myMenu.php';
         </div>
     </main>
 <?php
-include __DIR__ . '/../myFooter.php';
+include __DIR__ . '/myFooter.php';

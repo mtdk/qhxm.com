@@ -38,7 +38,7 @@ include __DIR__ . '/../myMenu.php';
                         <td><?php echo $rows[$i]['uname']; ?></td>
                         <td><a class="btn btn-outline-success btn-sm"
                                style="--bs-btn-padding-y: .2rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .7rem;"
-                               href="../bsjsbjl_down_check.php?id=<?php echo $rows[$i]['id']; ?>">关机</a>
+                               href="bsjsbjl_down_check.php?id=<?php echo $rows[$i]['id']; ?>">关机</a>
                         </td>
                     </tr>
                 <?php }

@@ -67,6 +67,7 @@ include __DIR__ . '/myMenu.php';
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingTwo">
                     <?php
+                    // $rd 当前系统时间
                     $rd = date('Y-m-d');
                     $stmt = $dbh->prepare("SELECT id,machine_id,register_time,machine_status from ymsbrecords where register_date=:register_date and uid=:uid and machine_status='开机'");
                     $stmt->bindParam(':register_date', $rd);
@@ -125,6 +126,7 @@ include __DIR__ . '/myMenu.php';
             <div class="accordion-item">
                 <h2 class="accordion-header" id="flush-headingThree">
                     <?php
+                    // $rd 当前系统时间
                     $rd = date('Y-m-d');
                     $stmt = $dbh->prepare("SELECT id,machine_id,register_time,machine_state from fqssrecords where register_date=:register_date and machine_state='开机'");
                     $stmt->bindParam(':register_date', $rd);

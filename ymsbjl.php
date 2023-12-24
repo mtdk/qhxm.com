@@ -5,6 +5,9 @@ include __DIR__ . '/db/db.php';
 include __DIR__ . '/myHeader.php';
 include __DIR__ . '/myMenu.php';
 
+// 工单序号
+$work_id = trim(base64_decode(htmlspecialchars($_GET['id']))) ?? '';
+
 $stmt = $dbh->prepare("select machine_id,machine_name from ymsb order by id");
 $stmt->execute();
 $rows = $stmt->fetchAll();
@@ -47,34 +50,53 @@ $rows = $stmt->fetchAll();
                         请选择日期...
                     </div>
                 </div>
+
+                <?php
+                if (!empty($work_id)) {
+                    $sth = $dbh->prepare("select * from work_order where id = :work_id");
+                    $sth->bindParam(':work_id', $work_id);
+                    $sth->execute();
+                    $result = $sth->fetchAll()[0];
+                }
+                ?>
                 <div class="col-sm-2">
-                    <label for="validationProductid" class="form-label">产品编号</label>
-                    <input type="text" class="form-control" id="validationProductid" maxlength="10" name="pro_id"
-                           required>
+                    <label for="pro_id" class="form-label">产品编号</label>
+                    <?php if (!empty($result['pro_id'])): ?>
+                        <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id" value="<?php echo $result['pro_id']; ?>" required>
+                    <?php else: ?>
+                        <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id" required>
+                    <?php endif; ?>
                     <div class="invalid-feedback">
                         请输入产品编号...！
                     </div>
                 </div>
                 <div class="col-sm-2">
-                    <label for="validationBathnumber" class="form-label">批号</label>
-                    <input type="text" class="form-control" id="validationBathnumber" value="<?php echo date('Ymd'); ?>"
-                           name="bath_number" minlength="11" maxlength="11" required>
+                    <label for="bath_number" class="form-label">批号</label>
+                    <?php if (!empty($result['bath_number'])): ?>
+                        <input type="text" class="form-control" id="bath_number" value="<?php echo $result['bath_number']; ?>" name="bath_number" minlength="11" maxlength="11" required>
+                    <?php else: ?>
+                        <input type="text" class="form-control" id="bath_number" value="<?php echo date('Ymd'); ?>" name="bath_number" minlength="11" maxlength="11" required>
+                    <?php endif; ?>
                     <div class="invalid-feedback">
                         请输入批号...！
                     </div>
                 </div>
-                <div class="col-sm-1">
-                    <label for="validationStartAndStop" class="form-label">开机启动</label>
-                    <div class="form-check mt-1">
-                        <input type="radio" class="form-check-input" id="validationStart" value="开机"
-                               name="radio_stacked"
-                               required>
-                        <label class="form-check-label" for="validationStart">运行...</label>
-                        <div class="invalid-feedback">请选择开机运行或者关机停止...!</div>
-                    </div>
+                <div class="col-sm-2">
+                    <label for="remarks" class="form-label">备注</label>
+                    <?php if (!empty($result['remarks'])): ?>
+                        <input type="text" class="form-control" id="remarks" name="remarks" value="<?php echo $result['remarks']; ?>" maxlength="11">
+                    <?php else: ?>
+                        <input type="text" class="form-control" id="remarks" name="remarks" maxlength="11" value="无">
+                    <?php endif; ?>
                 </div>
+                <?php if (!empty($work_id)): ?>
+                    <input type="hidden" class="form-control" id="work_id" maxlength="10" name="work_id" value="<?php echo $work_id; ?>" readonly>
+                <?php else: ?>
+                    <input type="hidden" class="form-control" id="work_id" maxlength="10" name="work_id" value="-1" readonly>
+                <?php endif; ?>
                 <div class="col-12">
-                    <button class="btn btn-primary" type="submit">提&nbsp;交&nbsp;保&nbsp;存</button>
+                    <button class="btn btn-primary btn-sm" type="submit">开&nbsp;机</button>
+                    &nbsp;<a class="btn btn-outline-secondary btn-sm" href="work_order_show.php">返回</a>
                 </div>
                 <script>
                     (() => {
@@ -98,7 +120,7 @@ $rows = $stmt->fetchAll();
             </form>
         </div>
         <div class="container mt-lg-4">
-            <table class="table table-hover text-primary">
+            <table class="table table-hover text-primary text-sm-center">
                 <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -124,7 +146,7 @@ $rows = $stmt->fetchAll();
                         <td><?php echo substr($rows[$i]['register_time'], 0, 5); ?></td>
                         <td><?php echo $rows[$i]['machine_status']; ?></td>
                         <td><a href="ymsbjl_down_check.php?id=<?php echo $rows[$i]['id']; ?>&uid=<?php echo $uid; ?>"
-                               class="btn btn-outline-success">关机</a>
+                               class="btn btn-outline-success btn-sm">关机</a>
                         </td>
                     </tr>
                 <?php } ?>

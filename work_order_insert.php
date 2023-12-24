@@ -18,7 +18,7 @@ include __DIR__ . '/myMenu.php';
                     <input type="text" class="form-control" id="pro_id" maxlength="10" name="pro_id"
                            required>
                     <div class="invalid-feedback">
-                        请输入产品编号...！
+                        请输入产品编号...
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -26,7 +26,7 @@ include __DIR__ . '/myMenu.php';
                     <input type="text" class="form-control" id="bath_number" value="<?php echo date('Ymd'); ?>"
                            name="bath_number" minlength="11" maxlength="11" readonly required>
                     <div class="invalid-feedback">
-                        请输入批号...！
+                        请输入批号...
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -34,7 +34,7 @@ include __DIR__ . '/myMenu.php';
                     <input type="text" class="form-control" id="bath_number_index" name="bath_number_index"
                            minlength="3" maxlength="3" required>
                     <div class="invalid-feedback">
-                        请输入批次序号...！
+                        请输入批次序号...
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -42,7 +42,7 @@ include __DIR__ . '/myMenu.php';
                     <input type="text" class="form-control" id="remarks" name="remarks" minlength="2" maxlength="11"
                            required>
                     <div class="invalid-feedback">
-                        请输入客户名称...！
+                        请输入客户名称...
                     </div>
                 </div>
                 <div class="col-sm-2">
@@ -53,7 +53,14 @@ include __DIR__ . '/myMenu.php';
                         <option value="YM">研磨</option>
                     </select>
                     <div class="invalid-feedback">
-                        请选择生产设备...
+                        请选择生产工艺...
+                    </div>
+                </div>
+                <div class="col-sm-2">
+                    <label for="lot_number" class="form-label">批次</label>
+                    <input type="text" value="1" class="form-control" id="lot_number" name="lot_number" minlength="1" maxlength="2" required>
+                    <div class="invalid-feedback">
+                        请输入批次数量...
                     </div>
                 </div>
                 <div class="col-12">

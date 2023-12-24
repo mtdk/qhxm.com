@@ -90,7 +90,7 @@ $result = $stmt->fetch(PDO::FETCH_ASSOC);
                 <?php endif; ?>
                 <input type="hidden" value="<?php echo $result['technology_target'];?>" id="technology_target" name="technology_target">
                 <button class="btn btn-primary btn-sm" type="submit">关&nbsp;机</button>
-                <a class="btn btn-outline-secondary btn-sm" href="work_order_show.php">返回</a>
+                <a class="btn btn-outline-secondary btn-sm" href="all_device.php">返回</a>
             </div>
             <script>
                 (() => {
