@@ -58,3 +58,44 @@ Route::middleware('auth')->group(function () {
         Route::get('/uncompleted', [DeviceRepairController::class, 'uncompleted'])->name('device-repairs.uncompleted');
     });
 });
+
+// 健康检查路由（用于监控）
+Route::get('/health', function () {
+    $checks = [
+        'database' => false,
+        'redis' => false,
+        'cache' => false,
+    ];
+    
+    // 数据库连接检查
+    try {
+        \Illuminate\Support\Facades\DB::connection()->getPdo();
+        $checks['database'] = true;
+    } catch (\Exception $e) {
+        // 忽略错误
+    }
+    
+    // Redis连接检查
+    try {
+        \Illuminate\Support\Facades\Redis::ping();
+        $checks['redis'] = true;
+    } catch (\Exception $e) {
+        // 忽略错误
+    }
+    
+    // 缓存检查
+    try {
+        \Illuminate\Support\Facades\Cache::put('health_check', 'ok', 5);
+        $checks['cache'] = \Illuminate\Support\Facades\Cache::get('health_check') === 'ok';
+    } catch (\Exception $e) {
+        // 忽略错误
+    }
+    
+    $allOk = array_reduce($checks, fn($carry, $item) => $carry && $item, true);
+    
+    return response()->json([
+        'status' => $allOk ? 'healthy' : 'unhealthy',
+        'checks' => $checks,
+        'timestamp' => now()->toISOString(),
+    ], $allOk ? 200 : 503);
+});
