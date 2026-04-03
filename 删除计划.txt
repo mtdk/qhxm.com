@@ -1,0 +1,133 @@
+# QHXM系统文件清理计划
+# 目标：删除旧系统文件，仅保留Laravel现代化项目
+
+## 保留的文件和目录
+1. laravel-qhxm/          - 新的Laravel现代化项目
+2. .git/                  - Git版本控制历史
+3. 删除计划.txt          - 本记录文件
+
+## 需要删除的目录
+- Admin_folder/          - 旧版后台管理系统
+- bootstrap/             - 旧版Bootstrap文件（新系统使用CDN）
+- brand/                 - 品牌图片（可删除，新系统使用Bootstrap Icons）
+- data_show/             - 旧版数据展示页面
+- db/                    - 旧版数据库配置（新系统使用.env配置）
+- fonts/                 - TCPDF字体文件（新系统可能不需要）
+- include/               - 旧版包含文件
+- user_session/          - 旧版会话管理
+- usersinfo/             - 用户信息相关旧文件
+
+## 需要删除的PHP文件（根目录）
+- all_device.php
+- bsj_rds_up.php
+- bsjsb_rds_print.php
+- bsjsb_rds_query.php
+- bsjsb_rds_send.php
+- bsjsb_records_show.php
+- bsjsbjl.php
+- bsjsbjl_down_check.php
+- bsjsbjl_down_save.php
+- bsjsbjl_save.php
+- composer-setup.php
+- device_fix_over_list.php
+- device_fix_print.php
+- device_fix_query.php
+- device_fix_query_send.php
+- device_fix_receive_info.php
+- device_fix_receive_save.php
+- device_fix_receive_show.php
+- device_fix_submit.php
+- device_fix_submit_save.php
+- device_repair.php
+- device_repair_check.php
+- device_repair_check_save.php
+- device_repair_over_list.php
+- device_repair_over_save.php
+- device_repair_over_show.php
+- device_repair_save.php
+- device_repair_show.php
+- device_search.php
+- fqpfsb_rds_up.php
+- fqpfsb_records_show.php
+- fqpfsbjl.php
+- fqpfsbjl_down_check.php
+- fqpfsbjl_down_save.php
+- fqpfsbjl_save.php
+- fqsb_rds_print.php
+- fqsb_rds_query.php
+- fqsb_rds_send.php
+- fssb_rds_print.php
+- fssb_rds_query.php
+- fssb_rds_send.php
+- fssb_rds_up.php
+- fssb_records_show.php
+- fssb_repair.php
+- fssbjl.php
+- fssbjl_doing_again.php
+- fssbjl_down_check.php
+- fssbjl_down_save.php
+- fssbjl_insert_auto.php
+- fssbjl_insert_other.php
+- fssbjl_over_workorder.php
+- fssbjl_save.php
+- index.php              # 旧版首页，将被Laravel首页取代
+- kyj_rds_up.php
+- kyjsb_rds_print.php
+- kyjsb_rds_query.php
+- kyjsb_rds_send.php
+- kyjsb_records_show.php
+- kyjsbjl.php
+- kyjsbjl_down_check.php
+- kyjsbjl_down_save.php
+- kyjsbjl_save.php
+- login.php              # 旧版登录页面
+- login_check.php        # 旧版登录验证
+- logout.php             # 旧版退出登录
+- msgPage.php            # 旧版消息页面
+- myFooter.php           # 旧版页脚
+- myHeader.php           # 旧版页头
+- myMenu.php             # 旧版菜单
+- MYPDF.php              # 旧版PDF生成
+- new_bathpage.php
+- register.php           # 旧版注册页面
+- register_save.php      # 旧版注册保存
+- tcpdf.php              # 旧版TCPDF库（3MB+）
+- tcpdf_autoconfig.php   # 旧版TCPDF配置
+- timeTocount.php
+- user_info_up.php
+- user_pwd_up.php
+- work_order_insert.php
+- work_order_save.php
+- work_order_select.php
+- work_order_send.php
+- work_order_show.php
+- work_order_update.php
+- work_order_update_save.php
+- ymsb_rds_print.php
+- ymsb_rds_query.php
+- ymsb_rds_send.php
+- ymsb_rds_up.php
+- ymsb_records_show.php
+- ymsbjl.php
+- ymsbjl_doing_again.php
+- ymsbjl_down_check.php
+- ymsbjl_down_save.php
+- ymsbjl_insert_auto.php
+- ymsbjl_insert_other.php
+- ymsbjl_over_workorder.php
+- ymsbjl_save.php
+
+## 数据库说明
+旧版使用 db/db.php 进行数据库连接
+新版Laravel使用 .env 文件进行数据库配置
+数据库结构保持不变，只是连接方式不同
+
+## 执行前验证
+1. Laravel项目完整性验证
+2. 数据库连接测试
+3. 确保有完整备份
+
+## 执行后验证
+1. Laravel项目能正常启动
+2. 所有功能模块正常工作
+3. 数据库访问正常

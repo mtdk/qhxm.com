@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\WorkOrderController;
+use App\Http\Controllers\DeviceRepairController;
 
 // 首页相关路由
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -40,5 +42,19 @@ Route::middleware('auth')->group(function () {
         Route::put('/{id}', [WorkOrderController::class, 'update'])->name('work-orders.update');
         Route::delete('/{id}', [WorkOrderController::class, 'destroy'])->name('work-orders.destroy');
         Route::post('/{id}/send', [WorkOrderController::class, 'send'])->name('work-orders.send');
+    });
+    
+    // 设备维修管理路由
+    Route::prefix('device-repairs')->group(function () {
+        Route::get('/', [DeviceRepairController::class, 'index'])->name('device-repairs.index');
+        Route::get('/create', [DeviceRepairController::class, 'create'])->name('device-repairs.create');
+        Route::post('/', [DeviceRepairController::class, 'store'])->name('device-repairs.store');
+        Route::get('/{id}', [DeviceRepairController::class, 'show'])->name('device-repairs.show');
+        Route::get('/{id}/edit', [DeviceRepairController::class, 'edit'])->name('device-repairs.edit');
+        Route::put('/{id}', [DeviceRepairController::class, 'update'])->name('device-repairs.update');
+        Route::delete('/{id}', [DeviceRepairController::class, 'destroy'])->name('device-repairs.destroy');
+        Route::post('/{id}/status', [DeviceRepairController::class, 'updateStatus'])->name('device-repairs.updateStatus');
+        Route::get('/statistics', [DeviceRepairController::class, 'statistics'])->name('device-repairs.statistics');
+        Route::get('/uncompleted', [DeviceRepairController::class, 'uncompleted'])->name('device-repairs.uncompleted');
     });
 });
