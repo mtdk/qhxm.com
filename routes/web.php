@@ -109,3 +109,79 @@ Route::get('/health', function () {
         'timestamp' => now()->toISOString(),
     ], $allOk ? 200 : 503);
 });
+// 工单管理相关路由
+Route::get('/work-order/register', [WorkOrderController::class, 'create'])->name('work.order.register');
+Route::post('/work-order/register', [WorkOrderController::class, 'store'])->name('work.order.register.store');
+
+// 工单领单相关
+Route::get('/work-order/claim', [WorkOrderController::class, 'claim'])->name('work.order.claim');
+Route::post('/work-order/claim/{id}', [WorkOrderController::class, 'claimStore'])->name('work.order.claim.store');
+
+// 工单关机相关
+Route::get('/work-order/shutdown', [WorkOrderController::class, 'shutdown'])->name('work.order.shutdown');
+Route::post('/work-order/shutdown/{id}', [WorkOrderController::class, 'shutdownStore'])->name('work.order.shutdown.store');
+
+// 设备登记相关路由
+Route::get('/device-register/fqpfsb', [DeviceRegisterController::class, 'fqpfsb'])->name('device.register.fqpfsb');
+Route::post('/device-register/fqpfsb', [DeviceRegisterController::class, 'fqpfsbStore'])->name('device.register.fqpfsb.store');
+
+Route::get('/device-register/kyjsb', [DeviceRegisterController::class, 'kyjsb'])->name('device.register.kyjsb');
+Route::post('/device-register/kyjsb', [DeviceRegisterController::class, 'kyjsbStore'])->name('device.register.kyjsb.store');
+
+Route::get('/device-register/bsjsb', [DeviceRegisterController::class, 'bsjsb'])->name('device.register.bsjsb');
+Route::post('/device-register/bsjsb', [DeviceRegisterController::class, 'bsjsbStore'])->name('device.register.bsjsb.store');
+
+Route::get('/device-register/fssb', [DeviceRegisterController::class, 'fssb'])->name('device.register.fssb');
+Route::post('/device-register/fssb', [DeviceRegisterController::class, 'fssbStore'])->name('device.register.fssb.store');
+
+Route::get('/device-register/ymsb', [DeviceRegisterController::class, 'ymsb'])->name('device.register.ymsb');
+Route::post('/device-register/ymsb', [DeviceRegisterController::class, 'ymsbStore'])->name('device.register.ymsb.store');
+
+// 设备报修相关
+Route::get('/device-repair/register', [DeviceRepairController::class, 'create'])->name('device.repair.register');
+Route::post('/device-repair/register', [DeviceRepairController::class, 'store'])->name('device.repair.register.store');
+
+Route::get('/device-report/review', [DeviceRepairController::class, 'review'])->name('device.report.review');
+Route::post('/device-report/review/{id}', [DeviceRepairController::class, 'reviewStore'])->name('device.report.review.store');
+
+Route::get('/device-report/confirm', [DeviceRepairController::class, 'confirm'])->name('device.report.confirm');
+Route::post('/device-report/confirm/{id}', [DeviceRepairController::class, 'confirmStore'])->name('device.report.confirm.store');
+
+// 手动关机相关
+Route::get('/manual-shutdown/fssb', [ManualShutdownController::class, 'fssb'])->name('manual.shutdown.fssb');
+Route::post('/manual-shutdown/fssb', [ManualShutdownController::class, 'fssbStore'])->name('manual.shutdown.fssb.store');
+
+Route::get('/manual-shutdown/ymsb', [ManualShutdownController::class, 'ymsb'])->name('manual.shutdown.ymsb');
+Route::post('/manual-shutdown/ymsb', [ManualShutdownController::class, 'ymsbStore'])->name('manual.shutdown.ymsb.store');
+
+Route::get('/manual-shutdown/fqpfsb', [ManualShutdownController::class, 'fqpfsb'])->name('manual.shutdown.fqpfsb');
+Route::post('/manual-shutdown/fqpfsb', [ManualShutdownController::class, 'fqpfsbStore'])->name('manual.shutdown.fqpfsb.store');
+
+Route::get('/manual-shutdown/bsj', [ManualShutdownController::class, 'bsj'])->name('manual.shutdown.bsj');
+Route::post('/manual-shutdown/bsj', [ManualShutdownController::class, 'bsjStore'])->name('manual.shutdown.bsj.store');
+
+Route::get('/manual-shutdown/kyj', [ManualShutdownController::class, 'kyj'])->name('manual.shutdown.kyj');
+Route::post('/manual-shutdown/kyj', [ManualShutdownController::class, 'kyjStore'])->name('manual.shutdown.kyj.store');
+
+// 记录打印相关
+Route::get('/record-print/fssb', [RecordPrintController::class, 'fssb'])->name('record.print.fssb');
+Route::get('/record-print/ymsb', [RecordPrintController::class, 'ymsb'])->name('record.print.ymsb');
+Route::get('/record-print/kyjsb', [RecordPrintController::class, 'kyjsb'])->name('record.print.kyjsb');
+Route::get('/record-print/bsjsb', [RecordPrintController::class, 'bsjsb'])->name('record.print.bsjsb');
+Route::get('/record-print/fqsb', [RecordPrintController::class, 'fqsb'])->name('record.print.fqsb');
+
+// 设备维修相关
+Route::get('/device-repair/receive', [DeviceRepairController::class, 'receive'])->name('device.repair.receive');
+Route::post('/device-repair/receive/{id}', [DeviceRepairController::class, 'receiveStore'])->name('device.repair.receive.store');
+
+Route::get('/device-repair/confirm', [DeviceRepairController::class, 'confirm'])->name('device.repair.confirm');
+Route::post('/device-repair/confirm/{id}', [DeviceRepairController::class, 'confirmStore'])->name('device.repair.confirm.store');
+
+Route::get('/device-repair/query', [DeviceRepairController::class, 'query'])->name('device.repair.query');
+
+// 仓储管理相关
+Route::get('/warehouse/manage', [WarehouseController::class, 'index'])->name('warehouse.manage');
+Route::get('/warehouse/test', [WarehouseController::class, 'test'])->name('warehouse.test');
+// 用户注册路由
+Route::get('/register', [Auth\RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [Auth\RegisterController::class, 'register'])->name('register.post');

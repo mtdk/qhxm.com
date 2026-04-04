@@ -20,7 +20,7 @@ class MenuService
                 'label' => '首页',
                 'icon' => 'bi bi-house',
                 'url' => route('home'),
-                'permission' => true,
+                'permission' => true, // 所有人都可以访问首页
             ],
         ];
 
@@ -77,12 +77,12 @@ class MenuService
                             [
                                 'label' => '我要领单',
                                 'icon' => 'bi bi-list-check',
-                                'url' => route('work.order.claim'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '我要关机',
                                 'icon' => 'bi bi-power',
-                                'url' => route('work.order.shutdown'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                         ],
                         'permission' => true,
@@ -95,27 +95,27 @@ class MenuService
                             [
                                 'label' => '废气设备登记',
                                 'icon' => 'bi bi-fan',
-                                'url' => route('device.register.fqpfsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '空压机登记',
                                 'icon' => 'bi bi-compass',
-                                'url' => route('device.register.kyjsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '冰水机登记',
                                 'icon' => 'bi bi-snow',
-                                'url' => route('device.register.bsjsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '分散登记',
                                 'icon' => 'bi bi-shuffle',
-                                'url' => route('device.register.fssb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '研磨登记',
                                 'icon' => 'bi bi-gear-wide',
-                                'url' => route('device.register.ymsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                         ],
                         'permission' => true,
@@ -128,7 +128,7 @@ class MenuService
                             [
                                 'label' => '报修登记',
                                 'icon' => 'bi bi-plus-circle',
-                                'url' => route('device.repair.register'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                         ],
                         'permission' => true,
@@ -146,12 +146,12 @@ class MenuService
                             [
                                 'label' => '我要领单',
                                 'icon' => 'bi bi-list-check',
-                                'url' => route('work.order.claim'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '我要关机',
                                 'icon' => 'bi bi-power',
-                                'url' => route('work.order.shutdown'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                         ],
                         'permission' => true,
@@ -164,27 +164,27 @@ class MenuService
                             [
                                 'label' => '废气设备登记',
                                 'icon' => 'bi bi-fan',
-                                'url' => route('device.register.fqpfsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '空压机登记',
                                 'icon' => 'bi bi-compass',
-                                'url' => route('device.register.kyjsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '冰水机登记',
                                 'icon' => 'bi bi-snow',
-                                'url' => route('device.register.bsjsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '分散登记',
                                 'icon' => 'bi bi-shuffle',
-                                'url' => route('device.register.fssb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '研磨登记',
                                 'icon' => 'bi bi-gear-wide',
-                                'url' => route('device.register.ymsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                         ],
                         'permission' => true,
@@ -197,27 +197,27 @@ class MenuService
                             [
                                 'label' => '分散关机',
                                 'icon' => 'bi bi-shuffle',
-                                'url' => route('manual.shutdown.fssb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '研磨关机',
                                 'icon' => 'bi bi-gear-wide',
-                                'url' => route('manual.shutdown.ymsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '废气设备关机',
                                 'icon' => 'bi bi-fan',
-                                'url' => route('manual.shutdown.fqpfsb'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '冰水机关机',
                                 'icon' => 'bi bi-snow',
-                                'url' => route('manual.shutdown.bsj'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '空压机关机',
                                 'icon' => 'bi bi-compass',
-                                'url' => route('manual.shutdown.kyj'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                         ],
                         'permission' => true,
@@ -230,17 +230,17 @@ class MenuService
                             [
                                 'label' => '报修登记',
                                 'icon' => 'bi bi-plus-circle',
-                                'url' => route('device.repair.register'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '报修审核',
                                 'icon' => 'bi bi-check-circle',
-                                'url' => route('device.report.review'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                             [
                                 'label' => '完成确认',
                                 'icon' => 'bi bi-check-all',
-                                'url' => route('device.report.confirm'),
+                                'url' => '#', // TODO: 替换为实际路由
                             ],
                         ],
                         'permission' => true,
@@ -248,7 +248,7 @@ class MenuService
                 ]);
             }
         }
-        // 行政部-设备科 (department_id = 4 && role_id = 2)
+        // 行政部-设备科 (department_id = 4)
         elseif ($departmentId == 4 && $roleId == 2) {
             $menus = array_merge($menus, [
                 [
@@ -259,27 +259,27 @@ class MenuService
                         [
                             'label' => '分散机记录打印',
                             'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.fssb'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                         [
                             'label' => '研磨机记录打印',
                             'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.ymsb'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                         [
                             'label' => '空压机记录打印',
                             'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.kyjsb'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                         [
                             'label' => '冰水机记录打印',
                             'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.bsjsb'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                         [
                             'label' => '废气设备记录打印',
                             'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.fqsb'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                     ],
                     'permission' => true,
@@ -292,17 +292,17 @@ class MenuService
                         [
                             'label' => '领单维修',
                             'icon' => 'bi bi-clipboard-check',
-                            'url' => route('device.repair.receive'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                         [
                             'label' => '完成确认',
                             'icon' => 'bi bi-check-all',
-                            'url' => route('device.repair.confirm'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                         [
                             'label' => '查询与打印',
                             'icon' => 'bi bi-search',
-                            'url' => route('device.repair.query'),
+                            'url' => '#', // TODO: 替换为实际路由
                         ],
                     ],
                     'permission' => true,
@@ -319,7 +319,7 @@ class MenuService
                     [
                         'label' => '工单登记',
                         'icon' => 'bi bi-plus-circle',
-                        'url' => route('work.order.register'),
+                        'url' => '#', // TODO: 替换为实际路由
                     ],
                 ],
                 'permission' => true,
@@ -366,8 +366,8 @@ class MenuService
             'user.password.change' => true,
 
             // 生产技术部权限
-            'work.order.claim' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'work.order.shutdown' => $departmentId == 2 && in_array($roleId, [1, 2]),
+            'work_order.claim' => $departmentId == 2 && in_array($roleId, [1, 2]),
+            'work_order.shutdown' => $departmentId == 2 && in_array($roleId, [1, 2]),
             'device.register.fqpfsb' => $departmentId == 2 && in_array($roleId, [1, 2]),
             'device.register.kyjsb' => $departmentId == 2 && in_array($roleId, [1, 2]),
             'device.register.bsjsb' => $departmentId == 2 && in_array($roleId, [1, 2]),
@@ -393,7 +393,7 @@ class MenuService
             'device.repair.query' => $departmentId == 4 && $roleId == 2,
 
             // 生产技术部-调度科权限
-            'work.order.register' => $departmentId == 5 && $roleId == 2,
+            'work_order.register' => $departmentId == 5 && $roleId == 2,
 
             // 仓储部权限
             'warehouse.manage' => $departmentId == 3 && $roleId == 1,
@@ -422,8 +422,8 @@ class MenuService
         // 根据部门和角色添加路由
         if ($departmentId == 2) {
             $routes = array_merge($routes, [
-                'work.order.claim',
-                'work.order.shutdown',
+                'work_order.claim',
+                'work_order.shutdown',
                 'device.register.fqpfsb',
                 'device.register.kyjsb',
                 'device.register.bsjsb',
@@ -459,7 +459,7 @@ class MenuService
         }
 
         if ($departmentId == 5 && $roleId == 2) {
-            $routes[] = 'work.order.register';
+            $routes[] = 'work_order.register';
         }
 
         if ($departmentId == 3) {
