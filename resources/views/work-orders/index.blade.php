@@ -31,126 +31,176 @@
             padding: 0.25rem 0.5rem;
             font-size: 0.875rem;
         }
+        .pagination {
+            margin-bottom: 0;
+            --bs-pagination-padding-x: 0.75rem;
+            --bs-pagination-padding-y: 0.375rem;
+            --bs-pagination-font-size: 0.875rem;
+            --bs-pagination-border-radius: 0.375rem;
+        }
         .pagination .page-link {
-            border-radius: 0.375rem;
+            border-radius: var(--bs-pagination-border-radius);
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: var(--bs-pagination-padding-y) var(--bs-pagination-padding-x);
+            margin: 0 0.125rem;
+            font-size: var(--bs-pagination-font-size);
+            line-height: 1.5;
+            min-width: 2.5rem;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.25rem;
+        }
+        .pagination .page-link svg,
+        .pagination .page-link i,
+        .pagination .page-link .bi {
+            width: 1rem !important;
+            height: 1rem !important;
+            font-size: 1rem !important;
+            vertical-align: -0.125em;
+        }
+        .pagination .page-item.active .page-link {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: white;
+            font-weight: 500;
+        }
+        .pagination .page-link:hover {
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+            color: #495057;
+            text-decoration: none;
+        }
+        .pagination .page-item.disabled .page-link {
+            color: #6c757d;
+            pointer-events: none;
+            background-color: #f8f9fa;
+            border-color: #dee2e6;
+            opacity: 0.6;
+        }
+        .pagination .page-item:first-child .page-link,
+        .pagination .page-item:last-child .page-link {
+            min-width: 2.5rem;
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .pagination .page-item:first-child .page-link svg,
+        .pagination .page-item:first-child .page-link i,
+        .pagination .page-item:first-child .page-link .bi,
+        .pagination .page-item:last-child .page-link svg,
+        .pagination .page-item:last-child .page-link i,
+        .pagination .page-item:last-child .page-link .bi {
+            width: 1rem !important;
+            height: 1rem !important;
+            font-size: 1rem !important;
+        }
+        @media (max-width: 768px) {
+            .pagination {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 0.25rem;
+            }
+            .pagination .page-link {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.8125rem;
+                min-width: 2.25rem;
+                margin: 0;
+                height: 2rem;
+            }
+            .pagination .page-item:first-child .page-link,
+            .pagination .page-item:last-child .page-link {
+                padding-left: 0.375rem;
+                padding-right: 0.375rem;
+                min-width: 2.25rem;
+            }
+            .card-footer .d-flex {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .card-footer .text-muted {
+                text-align: center;
+            }
         }
         .stats-card {
             background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
             color: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+            border-radius: 0.5rem;
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
         }
         .stats-number {
-            font-size: 2rem;
-            font-weight: 700;
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.1;
         }
         .stats-label {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             opacity: 0.9;
+            margin-top: 0.2rem;
         }
-        .state-0 { border-left: 4px solid #6c757d; }
-        .state-1 { border-left: 4px solid #0d6efd; }
-        .state-2 { border-left: 4px solid #fd7e14; }
-        .state-3 { border-left: 4px solid #198754; }
+        .workorder-row {
+            border-left: none;
+            transition: all 0.2s ease;
+        }
+        .workorder-row:hover {
+            background-color: #f8f9fa;
+            transform: none;
+        }
+        .workorder-row:nth-child(even) {
+            background-color: #fcfcfc;
+        }
+        .workorder-row:nth-child(even):hover {
+            background-color: #f5f5f5;
+        }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="bi bi-house-gear"></i> QHXM管理系统
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('home') }}">
-                            <i class="bi bi-house"></i> 首页
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('devices.index') }}">
-                            <i class="bi bi-device-hdd"></i> 设备管理
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ route('work-orders.index') }}">
-                            <i class="bi bi-clipboard-check"></i> 工单管理
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="bi bi-tools"></i> 维修管理
-                        </a>
-                    </li>
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                            <i class="bi bi-person-circle"></i> {{ session('uname', '用户') }}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-person"></i> 个人资料</a></li>
-                            <li><hr class="dropdown-divider"></li>
-                            <li>
-                                <form method="POST" action="{{ route('logout') }}">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">
-                                        <i class="bi bi-box-arrow-right"></i> 退出登录
-                                    </button>
-                                </form>
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    <!-- 公共菜单 -->
+    @include('components.menu')
 
     <div class="container mt-4">
         <!-- 页面标题和操作按钮 -->
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="h3 mb-0">
-                <i class="bi bi-clipboard-check"></i> 工单管理系统
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+            <h1 class="h3 mb-3 mb-md-0 flex-shrink-0">
+                <i class="bi bi-clipboard-check"></i> 工单管理
             </h1>
-            <div>
-                <a href="{{ route('work-orders.create') }}" class="btn btn-primary">
-                    <i class="bi bi-plus-circle"></i> 创建新工单
+            <div class="d-flex flex-wrap gap-2 justify-content-end w-100 w-md-auto">
+                <a href="{{ route('work-orders.create') }}" class="btn btn-primary flex-fill flex-md-grow-0">
+                    <i class="bi bi-plus-circle"></i> <span class="d-none d-md-inline">创建新工单</span>
+                    <span class="d-inline d-md-none">新建</span>
                 </a>
-                <button class="btn btn-outline-secondary" onclick="refreshData()">
-                    <i class="bi bi-arrow-clockwise"></i> 刷新
+                <button class="btn btn-outline-secondary flex-fill flex-md-grow-0" onclick="refreshData()">
+                    <i class="bi bi-arrow-clockwise"></i> <span class="d-none d-md-inline">刷新</span>
+                    <span class="d-inline d-md-none">刷新</span>
                 </button>
             </div>
         </div>
 
         <!-- 统计卡片 -->
-        <div class="row mb-4">
+        <div class="row mb-1">
             <div class="col-12">
                 <div class="stats-card">
-                    <div class="row text-center">
-                        <div class="col-md-3 mb-3 mb-md-0">
+                    <div class="row g-2 text-center">
+                        <div class="col-6 col-md-3">
                             <div class="stats-number">{{ $workOrders->total() }}</div>
-                            <div class="stats-label">总工单数</div>
+                            <div class="stats-label">未领取工单</div>
                         </div>
-                        <div class="col-md-2 mb-3 mb-md-0">
-                            <div class="stats-number">{{ $workOrders->where('work_state', 0)->count() }}</div>
-                            <div class="stats-label">未领取</div>
+                        <div class="col-6 col-md-3">
+                            <div class="stats-number">{{ $workOrders->count() }}</div>
+                            <div class="stats-label">本页显示</div>
                         </div>
-                        <div class="col-md-2 mb-3 mb-md-0">
-                            <div class="stats-number">{{ $workOrders->where('work_state', 1)->count() }}</div>
-                            <div class="stats-label">已领取</div>
+                        <div class="col-6 col-md-3">
+                            <div class="stats-number">{{ $workOrders->perPage() }}</div>
+                            <div class="stats-label">每页显示</div>
                         </div>
-                        <div class="col-md-2 mb-3 mb-md-0">
-                            <div class="stats-number">{{ $workOrders->where('work_state', 2)->count() }}</div>
-                            <div class="stats-label">进行中</div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="stats-number">{{ $workOrders->where('work_state', 3)->count() }}</div>
-                            <div class="stats-label">已完成</div>
+                        <div class="col-6 col-md-3">
+                            <div class="stats-number">{{ $workOrders->currentPage() }}</div>
+                            <div class="stats-label">当前页码</div>
                         </div>
                     </div>
                 </div>
@@ -159,14 +209,14 @@
 
         <!-- 消息提示 -->
         @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <div class="alert alert-success alert-dismissible fade show mb-2" role="alert">
                 <i class="bi bi-check-circle"></i> {{ session('success') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
         @endif
 
         @if(session('error'))
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="alert alert-danger alert-dismissible fade show mb-2" role="alert">
                 <i class="bi bi-exclamation-triangle"></i> {{ session('error') }}
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
@@ -194,8 +244,14 @@
                         </thead>
                         <tbody>
                             @forelse($workOrders as $order)
-                                <tr class="workorder-card state-{{ $order->work_state }}">
-                                    <td class="fw-bold">#{{ $order->id }}</td>
+                                <tr class="workorder-row">
+                                    <td class="fw-bold">
+                                        <a href="{{ route('work-orders.show', $order->id) }}" 
+                                           class="text-decoration-none text-primary" 
+                                           title="点击查看工单详情">
+                                            #{{ $order->id }}
+                                        </a>
+                                    </td>
                                     <td>{{ $order->pro_id }}</td>
                                     <td>
                                         <span class="badge bg-info text-dark">{{ $order->bath_number }}</span>
@@ -235,12 +291,6 @@
                                                class="btn btn-sm btn-outline-warning" title="编辑">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
-                                            @if($order->work_state == 0)
-                                                <button type="button" class="btn btn-sm btn-outline-primary" 
-                                                        onclick="sendWorkOrder({{ $order->id }})" title="发送工单">
-                                                    <i class="bi bi-send"></i>
-                                                </button>
-                                            @endif
                                             <form method="POST" action="{{ route('work-orders.destroy', $order->id) }}" 
                                                   class="d-inline" onsubmit="return confirm('确定要删除这个工单吗？')">
                                                 @csrf
@@ -276,64 +326,29 @@
                             显示 {{ $workOrders->firstItem() }} 到 {{ $workOrders->lastItem() }} 条，共 {{ $workOrders->total() }} 条
                         </div>
                         <nav>
-                            {{ $workOrders->links() }}
+                            {{ $workOrders->links('vendor.pagination.simple-bootstrap-5') }}
                         </nav>
                     </div>
                 </div>
             @endif
         </div>
 
-        <!-- 工单状态说明 -->
-        <div class="row mt-4">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header bg-light">
-                        <h6 class="mb-0"><i class="bi bi-info-circle"></i> 工单状态说明</h6>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-6 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <span class="badge bg-secondary me-2">未领取</span>
-                                    <small>等待操作员领取</small>
-                                </div>
-                            </div>
-                            <div class="col-6 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <span class="badge bg-primary me-2">已领取</span>
-                                    <small>操作员已领取</small>
-                                </div>
-                            </div>
-                            <div class="col-6 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <span class="badge bg-warning me-2">进行中</span>
-                                    <small>正在生产中</small>
-                                </div>
-                            </div>
-                            <div class="col-6 mb-2">
-                                <div class="d-flex align-items-center">
-                                    <span class="badge bg-success me-2">已完成</span>
-                                    <small>生产已完成</small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-6">
+        <!-- 工艺类型说明 -->
+        <div class="row mt-2">
+            <div class="col-md-12">
                 <div class="card">
                     <div class="card-header bg-light">
                         <h6 class="mb-0"><i class="bi bi-tags"></i> 工艺类型说明</h6>
                     </div>
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-6 mb-2">
+                            <div class="col-md-6 mb-2">
                                 <div class="d-flex align-items-center">
                                     <span class="badge bg-primary me-2">FS</span>
                                     <small>分散工艺</small>
                                 </div>
                             </div>
-                            <div class="col-6 mb-2">
+                            <div class="col-md-6 mb-2">
                                 <div class="d-flex align-items-center">
                                     <span class="badge bg-warning me-2">YM</span>
                                     <small>研磨工艺</small>
@@ -350,34 +365,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     
     <script>
-        // 发送工单
-        function sendWorkOrder(orderId) {
-            if (!confirm('确定要发送这个工单吗？')) {
-                return;
-            }
-            
-            fetch(`/work-orders/${orderId}/send`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('工单发送成功！');
-                    location.reload();
-                } else {
-                    alert('发送失败：' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('发送失败，请稍后重试');
-            });
-        }
-        
         // 刷新数据
         function refreshData() {
             location.reload();

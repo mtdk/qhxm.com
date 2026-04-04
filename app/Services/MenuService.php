@@ -7,469 +7,220 @@ use App\Models\UserTb;
 class MenuService
 {
     /**
-     * 根据用户部门和角色获取菜单项
+     * 根据用户角色获取菜单项
+     *
+     * @param UserTb|null $user
+     * @return array
      */
-    public static function getMenuItems(UserTb $user): array
+    public static function getMenuForUser($user = null)
     {
-        $departmentId = $user->department_id ?? 0;
+        if (!$user) {
+            // 未登录用户
+            return self::getGuestMenu();
+        }
+        
         $roleId = $user->role_id ?? 0;
         
-        $menuItems = [
+        // 根据角色ID返回对应的菜单
+        switch ($roleId) {
+            case 1: // 管理员
+                return self::getAdminMenu();
+            case 2: // 生产计划员（工单创建人员）
+                return self::getPlannerMenu();
+            case 3: // 生产技术员
+                return self::getTechnicianMenu();
+            default:
+                return self::getGuestMenu();
+        }
+    }
+    
+    /**
+     * 获取用户菜单项（兼容旧代码）
+     *
+     * @param UserTb|null $user
+     * @return array
+     */
+    public static function getMenuItems($user = null)
+    {
+        return self::getMenuForUser($user);
+    }
+    
+    /**
+     * 管理员菜单
+     */
+    private static function getAdminMenu()
+    {
+        return [
             [
-                'type' => 'link',
-                'label' => '首页',
-                'icon' => 'bi bi-house',
-                'url' => route('home'),
-                'permission' => true,
+                'name' => '首页',
+                'route' => 'home',
+                'icon' => 'bi-house',
+                'active_patterns' => ['home']
+            ],
+            [
+                'name' => '设备管理',
+                'route' => 'devices.index',
+                'icon' => 'bi-device-hdd',
+                'active_patterns' => ['devices.*', 'device.*']
+            ],
+            [
+                'name' => '工单管理',
+                'route' => 'work-orders.index',
+                'icon' => 'bi-clipboard-check',
+                'active_patterns' => ['work-orders.*', 'work-order.*']
+            ],
+            [
+                'name' => '用户管理',
+                'route' => '#',
+                'icon' => 'bi-people',
+                'active_patterns' => ['users.*', 'user.*']
+            ],
+            [
+                'name' => '系统设置',
+                'route' => '#',
+                'icon' => 'bi-gear',
+                'active_patterns' => ['settings.*']
             ],
         ];
-
-        // 根据部门和角色添加特定菜单
-        $departmentMenus = self::getDepartmentMenus($departmentId, $roleId);
-        $menuItems = array_merge($menuItems, $departmentMenus);
-
-        // 添加用户中心菜单（所有人都可以访问）
-        $menuItems[] = [
-            'type' => 'dropdown',
-            'label' => '用户中心',
-            'icon' => 'bi bi-person-circle',
-            'items' => [
-                [
-                    'label' => '用户信息',
-                    'icon' => 'bi bi-person',
-                    'url' => route('user.info'),
-                ],
-                [
-                    'label' => '用户姓名修改',
-                    'icon' => 'bi bi-pencil-square',
-                    'url' => route('user.name.change'),
-                ],
-                [
-                    'label' => '密码修改',
-                    'icon' => 'bi bi-key',
-                    'url' => route('user.password.change'),
-                ],
+    }
+    
+    /**
+     * 生产计划员菜单（工单创建人员）
+     */
+    private static function getPlannerMenu()
+    {
+        return [
+            [
+                'name' => '首页',
+                'route' => 'home',
+                'icon' => 'bi-house',
+                'active_patterns' => ['home', 'dashboard', 'realtime-status']
             ],
-            'permission' => true,
+            [
+                'name' => '工单管理',
+                'route' => 'work-orders.index',
+                'icon' => 'bi-clipboard-check',
+                'active_patterns' => ['work-orders.*', 'work-order.*']
+            ],
         ];
-
-        // 过滤掉没有权限的菜单项
-        return array_filter($menuItems, fn($item) => $item['permission']);
     }
-
+    
     /**
-     * 根据部门和角色获取特定菜单
+     * 生产技术员菜单
      */
-    private static function getDepartmentMenus(int $departmentId, int $roleId): array
+    private static function getTechnicianMenu()
     {
-        $menus = [];
-
-        // 生产技术部 (department_id = 2)
-        if ($departmentId == 2) {
-            // 员工 (role_id = 1)
-            if ($roleId == 1) {
-                $menus = array_merge($menus, [
-                    [
-                        'type' => 'dropdown',
-                        'label' => '工单管理',
-                        'icon' => 'bi bi-clipboard-check',
-                        'items' => [
-                            [
-                                'label' => '我要领单',
-                                'icon' => 'bi bi-list-check',
-                                'url' => route('work.order.claim'),
-                            ],
-                            [
-                                'label' => '我要关机',
-                                'icon' => 'bi bi-power',
-                                'url' => route('work.order.shutdown'),
-                            ],
-                        ],
-                        'permission' => true,
-                    ],
-                    [
-                        'type' => 'dropdown',
-                        'label' => '手动登记',
-                        'icon' => 'bi bi-pencil-square',
-                        'items' => [
-                            [
-                                'label' => '废气设备登记',
-                                'icon' => 'bi bi-fan',
-                                'url' => route('device.register.fqpfsb'),
-                            ],
-                            [
-                                'label' => '空压机登记',
-                                'icon' => 'bi bi-compass',
-                                'url' => route('device.register.kyjsb'),
-                            ],
-                            [
-                                'label' => '冰水机登记',
-                                'icon' => 'bi bi-snow',
-                                'url' => route('device.register.bsjsb'),
-                            ],
-                            [
-                                'label' => '分散登记',
-                                'icon' => 'bi bi-shuffle',
-                                'url' => route('device.register.fssb'),
-                            ],
-                            [
-                                'label' => '研磨登记',
-                                'icon' => 'bi bi-gear-wide',
-                                'url' => route('device.register.ymsb'),
-                            ],
-                        ],
-                        'permission' => true,
-                    ],
-                    [
-                        'type' => 'dropdown',
-                        'label' => '设备报修',
-                        'icon' => 'bi bi-tools',
-                        'items' => [
-                            [
-                                'label' => '报修登记',
-                                'icon' => 'bi bi-plus-circle',
-                                'url' => route('device.repair.register'),
-                            ],
-                        ],
-                        'permission' => true,
-                    ],
-                ]);
-            }
-            // 管理员 (role_id = 2)
-            elseif ($roleId == 2) {
-                $menus = array_merge($menus, [
-                    [
-                        'type' => 'dropdown',
-                        'label' => '工单管理',
-                        'icon' => 'bi bi-clipboard-check',
-                        'items' => [
-                            [
-                                'label' => '我要领单',
-                                'icon' => 'bi bi-list-check',
-                                'url' => route('work.order.claim'),
-                            ],
-                            [
-                                'label' => '我要关机',
-                                'icon' => 'bi bi-power',
-                                'url' => route('work.order.shutdown'),
-                            ],
-                        ],
-                        'permission' => true,
-                    ],
-                    [
-                        'type' => 'dropdown',
-                        'label' => '手动登记',
-                        'icon' => 'bi bi-pencil-square',
-                        'items' => [
-                            [
-                                'label' => '废气设备登记',
-                                'icon' => 'bi bi-fan',
-                                'url' => route('device.register.fqpfsb'),
-                            ],
-                            [
-                                'label' => '空压机登记',
-                                'icon' => 'bi bi-compass',
-                                'url' => route('device.register.kyjsb'),
-                            ],
-                            [
-                                'label' => '冰水机登记',
-                                'icon' => 'bi bi-snow',
-                                'url' => route('device.register.bsjsb'),
-                            ],
-                            [
-                                'label' => '分散登记',
-                                'icon' => 'bi bi-shuffle',
-                                'url' => route('device.register.fssb'),
-                            ],
-                            [
-                                'label' => '研磨登记',
-                                'icon' => 'bi bi-gear-wide',
-                                'url' => route('device.register.ymsb'),
-                            ],
-                        ],
-                        'permission' => true,
-                    ],
-                    [
-                        'type' => 'dropdown',
-                        'label' => '手动关机',
-                        'icon' => 'bi bi-power',
-                        'items' => [
-                            [
-                                'label' => '分散关机',
-                                'icon' => 'bi bi-shuffle',
-                                'url' => route('manual.shutdown.fssb'),
-                            ],
-                            [
-                                'label' => '研磨关机',
-                                'icon' => 'bi bi-gear-wide',
-                                'url' => route('manual.shutdown.ymsb'),
-                            ],
-                            [
-                                'label' => '废气设备关机',
-                                'icon' => 'bi bi-fan',
-                                'url' => route('manual.shutdown.fqpfsb'),
-                            ],
-                            [
-                                'label' => '冰水机关机',
-                                'icon' => 'bi bi-snow',
-                                'url' => route('manual.shutdown.bsj'),
-                            ],
-                            [
-                                'label' => '空压机关机',
-                                'icon' => 'bi bi-compass',
-                                'url' => route('manual.shutdown.kyj'),
-                            ],
-                        ],
-                        'permission' => true,
-                    ],
-                    [
-                        'type' => 'dropdown',
-                        'label' => '设备管理',
-                        'icon' => 'bi bi-gear',
-                        'items' => [
-                            [
-                                'label' => '报修登记',
-                                'icon' => 'bi bi-plus-circle',
-                                'url' => route('device.repair.register'),
-                            ],
-                            [
-                                'label' => '报修审核',
-                                'icon' => 'bi bi-check-circle',
-                                'url' => route('device.report.review'),
-                            ],
-                            [
-                                'label' => '完成确认',
-                                'icon' => 'bi bi-check-all',
-                                'url' => route('device.report.confirm'),
-                            ],
-                        ],
-                        'permission' => true,
-                    ],
-                ]);
-            }
-        }
-        // 行政部-设备科 (department_id = 4 && role_id = 2)
-        elseif ($departmentId == 4 && $roleId == 2) {
-            $menus = array_merge($menus, [
-                [
-                    'type' => 'dropdown',
-                    'label' => '记录打印',
-                    'icon' => 'bi bi-printer',
-                    'items' => [
-                        [
-                            'label' => '分散机记录打印',
-                            'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.fssb'),
-                        ],
-                        [
-                            'label' => '研磨机记录打印',
-                            'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.ymsb'),
-                        ],
-                        [
-                            'label' => '空压机记录打印',
-                            'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.kyjsb'),
-                        ],
-                        [
-                            'label' => '冰水机记录打印',
-                            'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.bsjsb'),
-                        ],
-                        [
-                            'label' => '废气设备记录打印',
-                            'icon' => 'bi bi-printer-fill',
-                            'url' => route('record.print.fqsb'),
-                        ],
-                    ],
-                    'permission' => true,
-                ],
-                [
-                    'type' => 'dropdown',
-                    'label' => '设备维修',
-                    'icon' => 'bi bi-tools',
-                    'items' => [
-                        [
-                            'label' => '领单维修',
-                            'icon' => 'bi bi-clipboard-check',
-                            'url' => route('device.repair.receive'),
-                        ],
-                        [
-                            'label' => '完成确认',
-                            'icon' => 'bi bi-check-all',
-                            'url' => route('device.repair.confirm'),
-                        ],
-                        [
-                            'label' => '查询与打印',
-                            'icon' => 'bi bi-search',
-                            'url' => route('device.repair.query'),
-                        ],
-                    ],
-                    'permission' => true,
-                ],
-            ]);
-        }
-        // 生产技术部-调度科 (department_id = 5 && role_id = 2)
-        elseif ($departmentId == 5 && $roleId == 2) {
-            $menus[] = [
-                'type' => 'dropdown',
-                'label' => '工单管理',
-                'icon' => 'bi bi-clipboard-check',
-                'items' => [
-                    [
-                        'label' => '工单登记',
-                        'icon' => 'bi bi-plus-circle',
-                        'url' => route('work.order.register'),
-                    ],
-                ],
-                'permission' => true,
-            ];
-        }
-        // 仓储部 (department_id = 3)
-        elseif ($departmentId == 3) {
-            if ($roleId == 1) {
-                $menus[] = [
-                    'type' => 'dropdown',
-                    'label' => '仓储管理',
-                    'icon' => 'bi bi-box-seam',
-                    'items' => [],
-                    'permission' => true,
-                ];
-            } elseif ($roleId == 2) {
-                $menus[] = [
-                    'type' => 'dropdown',
-                    'label' => '仓储测试',
-                    'icon' => 'bi bi-box-seam',
-                    'items' => [],
-                    'permission' => true,
-                ];
-            }
-        }
-
-        return $menus;
-    }
-
-    /**
-     * 检查用户是否有权限访问某个菜单
-     */
-    public static function hasPermission(UserTb $user, string $menuKey): bool
-    {
-        $departmentId = $user->department_id ?? 0;
-        $roleId = $user->role_id ?? 0;
-
-        // 权限规则定义
-        $permissionRules = [
-            // 首页和用户信息所有人都可以访问
-            'home' => true,
-            'user.info' => true,
-            'user.name.change' => true,
-            'user.password.change' => true,
-
-            // 生产技术部权限
-            'work.order.claim' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'work.order.shutdown' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'device.register.fqpfsb' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'device.register.kyjsb' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'device.register.bsjsb' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'device.register.fssb' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'device.register.ymsb' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'device.repair.register' => $departmentId == 2 && in_array($roleId, [1, 2]),
-            'device.report.review' => $departmentId == 2 && $roleId == 2,
-            'device.report.confirm' => $departmentId == 2 && $roleId == 2,
-            'manual.shutdown.fssb' => $departmentId == 2 && $roleId == 2,
-            'manual.shutdown.ymsb' => $departmentId == 2 && $roleId == 2,
-            'manual.shutdown.fqpfsb' => $departmentId == 2 && $roleId == 2,
-            'manual.shutdown.bsj' => $departmentId == 2 && $roleId == 2,
-            'manual.shutdown.kyj' => $departmentId == 2 && $roleId == 2,
-
-            // 行政部-设备科权限
-            'record.print.fssb' => $departmentId == 4 && $roleId == 2,
-            'record.print.ymsb' => $departmentId == 4 && $roleId == 2,
-            'record.print.kyjsb' => $departmentId == 4 && $roleId == 2,
-            'record.print.bsjsb' => $departmentId == 4 && $roleId == 2,
-            'record.print.fqsb' => $departmentId == 4 && $roleId == 2,
-            'device.repair.receive' => $departmentId == 4 && $roleId == 2,
-            'device.repair.confirm' => $departmentId == 4 && $roleId == 2,
-            'device.repair.query' => $departmentId == 4 && $roleId == 2,
-
-            // 生产技术部-调度科权限
-            'work.order.register' => $departmentId == 5 && $roleId == 2,
-
-            // 仓储部权限
-            'warehouse.manage' => $departmentId == 3 && $roleId == 1,
-            'warehouse.test' => $departmentId == 3 && $roleId == 2,
+        return [
+            [
+                'name' => '首页',
+                'route' => 'home',
+                'icon' => 'bi-house',
+                'active_patterns' => ['home']
+            ],
+            [
+                'name' => '我的工单',
+                'route' => '#',
+                'icon' => 'bi-clipboard',
+                'active_patterns' => ['my-work-orders.*']
+            ],
+            [
+                'name' => '设备操作',
+                'route' => '#',
+                'icon' => 'bi-tools',
+                'active_patterns' => ['device-operations.*']
+            ],
         ];
-
-        return $permissionRules[$menuKey] ?? false;
     }
-
+    
     /**
-     * 获取用户可访问的路由列表
+     * 访客菜单（未登录用户）
      */
-    public static function getAllowedRoutes(UserTb $user): array
+    private static function getGuestMenu()
     {
-        $routes = [
-            'home',
-            'user.info',
-            'user.name.change',
-            'user.password.change',
-            'logout',
+        return [
+            [
+                'name' => '首页',
+                'route' => 'home',
+                'icon' => 'bi-house',
+                'active_patterns' => ['home']
+            ],
+            [
+                'name' => '登录',
+                'route' => 'login',
+                'icon' => 'bi-box-arrow-in-right',
+                'active_patterns' => ['login']
+            ],
         ];
-
-        $departmentId = $user->department_id ?? 0;
-        $roleId = $user->role_id ?? 0;
-
-        // 根据部门和角色添加路由
-        if ($departmentId == 2) {
-            $routes = array_merge($routes, [
-                'work.order.claim',
-                'work.order.shutdown',
-                'device.register.fqpfsb',
-                'device.register.kyjsb',
-                'device.register.bsjsb',
-                'device.register.fssb',
-                'device.register.ymsb',
-                'device.repair.register',
-            ]);
-
-            if ($roleId == 2) {
-                $routes = array_merge($routes, [
-                    'device.report.review',
-                    'device.report.confirm',
-                    'manual.shutdown.fssb',
-                    'manual.shutdown.ymsb',
-                    'manual.shutdown.fqpfsb',
-                    'manual.shutdown.bsj',
-                    'manual.shutdown.kyj',
-                ]);
+    }
+    
+    /**
+     * 检查当前路由是否匹配菜单项
+     *
+     * @param array $menuItem
+     * @param string $currentRoute
+     * @return bool
+     */
+    public static function isActive($menuItem, $currentRoute)
+    {
+        if (!isset($menuItem['active_patterns'])) {
+            return false;
+        }
+        
+        foreach ($menuItem['active_patterns'] as $pattern) {
+            if (fnmatch($pattern, $currentRoute)) {
+                return true;
             }
         }
-
-        if ($departmentId == 4 && $roleId == 2) {
-            $routes = array_merge($routes, [
-                'record.print.fssb',
-                'record.print.ymsb',
-                'record.print.kyjsb',
-                'record.print.bsjsb',
-                'record.print.fqsb',
-                'device.repair.receive',
-                'device.repair.confirm',
-                'device.repair.query',
-            ]);
+        
+        return false;
+    }
+    
+    /**
+     * 获取当前用户（从session中）
+     *
+     * @return UserTb|null
+     */
+    public static function getCurrentUser()
+    {
+        // 当前系统使用session存储用户信息
+        // 用户ID可能存储在session('uid')中
+        $userId = session('uid');
+        
+        if ($userId) {
+            return UserTb::where('uid', $userId)->first();
         }
-
-        if ($departmentId == 5 && $roleId == 2) {
-            $routes[] = 'work.order.register';
-        }
-
-        if ($departmentId == 3) {
-            if ($roleId == 1) {
-                $routes[] = 'warehouse.manage';
-            } elseif ($roleId == 2) {
-                $routes[] = 'warehouse.test';
-            }
-        }
-
-        return $routes;
+        
+        // 如果session中没有uid，尝试从其他session字段获取
+        // 或者返回一个模拟用户用于测试
+        return self::getMockUserForTesting();
+    }
+    
+    /**
+     * 获取测试用的模拟用户（用于开发测试）
+     *
+     * @return UserTb|null
+     */
+    private static function getMockUserForTesting()
+    {
+        // 这里可以根据需要返回不同角色的用户进行测试
+        // 生产环境中应该注释掉这部分代码
+        
+        // 测试用：返回生产计划员（role_id = 2）
+        $mockUser = new UserTb();
+        $mockUser->role_id = 2; // 生产计划员
+        $mockUser->uid = 'test_planner';
+        $mockUser->uname = '测试计划员';
+        
+        return $mockUser;
+        
+        // 如果要测试管理员，取消下面的注释
+        // $mockUser = new UserTb();
+        // $mockUser->role_id = 1; // 管理员
+        // $mockUser->uid = 'test_admin';
+        // $mockUser->uname = '测试管理员';
+        // return $mockUser;
+        
+        // 如果要测试未登录状态，返回null
+        // return null;
     }
 }

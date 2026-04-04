@@ -16,7 +16,10 @@ class WorkOrderController extends Controller
      */
     public function index()
     {
-        $workOrders = WorkOrder::orderBy('id', 'desc')->paginate(20);
+        // 只显示未领取的工单（work_state = 0），每页显示10条记录
+        $workOrders = WorkOrder::where('work_state', 0)
+                              ->orderBy('id', 'desc')
+                              ->paginate(10);
         
         return view('work-orders.index', compact('workOrders'));
     }

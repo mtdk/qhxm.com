@@ -81,16 +81,14 @@ class WorkOrder extends Model
      */
     public function deviceRecords()
     {
-        $relation = null;
-        
         if ($this->technology_target === 'FS') {
-            $relation = $this->hasMany(FssbRecord::class, 'work_id', 'id');
+            return $this->hasMany(FssbRecord::class, 'work_id', 'id');
         } elseif ($this->technology_target === 'YM') {
-            // YmsbRecord 模型需要后续创建
-            $relation = $this->hasMany(YmsbRecord::class, 'work_id', 'id');
+            return $this->hasMany(YmsbRecord::class, 'work_id', 'id');
         }
         
-        return $relation;
+        // 未知工艺类型，返回空关系（避免实例化抽象类）
+        return $this->hasMany(FssbRecord::class, 'work_id', 'id')->whereNull('id');
     }
 
     /**

@@ -34,71 +34,8 @@
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <i class="bi bi-house-gear"></i> QHXM管理系统
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    @if(isset($menuItems))
-                        @foreach($menuItems as $menu)
-                            @if($menu['type'] === 'link')
-                                <li class="nav-item">
-                                    <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" href="{{ $menu['url'] }}">
-                                        <i class="{{ $menu['icon'] }}"></i> {{ $menu['label'] }}
-                                    </a>
-                                </li>
-                            @elseif($menu['type'] === 'dropdown')
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                        <i class="{{ $menu['icon'] }}"></i> {{ $menu['label'] }}
-                                    </a>
-                                    <ul class="dropdown-menu">
-                                        @foreach($menu['items'] as $submenu)
-                                            <li><a class="dropdown-item" href="{{ $submenu['url'] }}"><i class="{{ $submenu['icon'] }}"></i> {{ $submenu['label'] }}</a></li>
-                                        @endforeach
-                                    </ul>
-                                </li>
-                            @endif
-                        @endforeach
-                    @else
-                        <!-- 默认菜单（如果没有传递menuItems） -->
-                        <li class="nav-item">
-                            <a class="nav-link active" href="{{ route('home') }}">
-                                <i class="bi bi-house"></i> 首页
-                            </a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
-                                <i class="bi bi-person-circle"></i> 用户中心
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('user.info') }}"><i class="bi bi-person"></i> 用户信息</a></li>
-                                <li><a class="dropdown-item" href="{{ route('user.name.change') }}"><i class="bi bi-pencil-square"></i> 用户姓名修改</a></li>
-                                <li><a class="dropdown-item" href="{{ route('user.password.change') }}"><i class="bi bi-key"></i> 密码修改</a></li>
-                            </ul>
-                        </li>
-                    @endif
-                </ul>
-                <div class="d-flex align-items-center">
-                    <span class="navbar-text me-3">
-                        <i class="bi bi-person"></i> 欢迎您，{{ session('uname', '用户') }}
-                    </span>
-                    <form method="POST" action="{{ route('logout') }}" class="d-inline m-0">
-                        @csrf
-                        <button type="submit" class="btn btn-outline-light btn-sm px-3">
-                            <i class="bi bi-box-arrow-right me-1"></i> 退出
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <!-- 公共菜单 -->
+    @include('components.menu')
 
     <!-- 主要内容 -->
     <main class="container main-container">

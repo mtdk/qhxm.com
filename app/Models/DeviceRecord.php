@@ -87,6 +87,17 @@ abstract class DeviceRecord extends Model
     }
 
     /**
+     * 创建一个新的 Eloquent 集合实例
+     *
+     * @param array $models
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function newCollection(array $models = [])
+    {
+        return new \Illuminate\Database\Eloquent\Collection($models);
+    }
+
+    /**
      * 获取当天正在运行的记录
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
